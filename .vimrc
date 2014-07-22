@@ -32,6 +32,7 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V
 
 "#### Only windows.
 if ostype=="win"
+	set nobackup
 	cd ~
 	colorscheme evening
 endif
@@ -63,6 +64,7 @@ augroup END
 
 function! s:myFunc()
 endfunction
+
 
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
@@ -105,7 +107,8 @@ endif
 
 filetype plugin indent on
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'ZenCoding.vim'
+"NeoBundle 'ZenCoding.vim'
+NeoBundle 'kripken/emscripten'
 NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'HTML5-Syntax-File'
