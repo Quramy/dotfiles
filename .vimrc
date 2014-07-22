@@ -65,7 +65,6 @@ augroup END
 function! s:myFunc()
 endfunction
 
-
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''

@@ -7,6 +7,6 @@ if exist %userprofile%\.vimrc (
 		del %userprofile%\.vimrc
 )
 
-mklink %userprofile%\.vimrc %base%.vimrc
+mklink /H %userprofile%\.vimrc %base%.vimrc
 rem }}} end VIM
 
