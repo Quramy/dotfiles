@@ -107,7 +107,7 @@ endif
 filetype plugin indent on
 NeoBundle 'altercation/vim-colors-solarized'
 "NeoBundle 'ZenCoding.vim'
-NeoBundle 'kripken/emscripten'
+NeoBundle 'vim-scripts/Emmet.vim'
 NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'HTML5-Syntax-File'
