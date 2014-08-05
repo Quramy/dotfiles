@@ -6,7 +6,6 @@ else
 endif
 "}}} end Pre Config
 
-
 "### Basic Settings{{{
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
@@ -38,62 +37,6 @@ if ostype=="win"
 endif
 
 "}}} end BasicSettings
-
-"### Auto Command {{{
-"#### File types
-augroup vimrc_detect_filetype
-	autocmd!
-	autocmd BufNewFile,BufRead *.json set filetype=json
-	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
-	autocmd BufNewFile,BufRead *.ru set filetype=ruby
-
-	autocmd BufNewFile * set fenc=utf-8
-	autocmd BufNewFile *.bat set fenc=shift-jis
-	if(ostype=="win")
-		autocmd BufNewFile *.txt set fenc=shift-jis
-	endif
-augroup END
-"#### Screen Hacks 
-"function SetScreenTabName(name)
-"	let arg = 'k' . a:name . '\\'
-"	silent! exe '!echo -n "' . arg . "\""
-"endfunction
-"autocmd VimLeave * call SetScreenTabName('(zsh)')
-"autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("(vim %)") | endif 
-"}}} end Auto Command
-
-function! s:myFunc()
-endfunction
-
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
-function! s:ChangeCurrentDir(directory, bang)
-    if a:directory == ''
-        lcd %:p:h
-    else
-        execute 'lcd' . a:directory
-    endif
-
-    if a:bang == ''
-        pwd
-    endif
-endfunction
-
-"### Key Mappings {{{
-"#### prefix
-let mapleader = ","
-noremap \ ,
-
-"#### Change Current Directory to Buffer's dir.
-nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-"#### Tab Navigation
-noremap gh : <C-u>tabprevious<CR>
-noremap gl : <C-u>tabnext<CR>
-
-"#### VimFiler
-nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
-
-"}}} end Key Mappings 
 
 "### NeoBundle Configuration {{{
 set nocompatible
@@ -145,3 +88,79 @@ syntax on
 
 " }}} NeoBundle Configuration end.
 
+"### Auto Command {{{
+"#### File types
+augroup vimrc_detect_filetype
+	autocmd!
+	autocmd BufNewFile,BufRead *.json set filetype=json
+	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
+	autocmd BufNewFile,BufRead *.ru set filetype=ruby
+
+	autocmd BufNewFile * set fenc=utf-8
+	autocmd BufNewFile *.bat set fenc=shift-jis
+	if(ostype=="win")
+		autocmd BufNewFile *.txt set fenc=shift-jis
+	endif
+augroup END
+"#### Screen Hacks 
+"function SetScreenTabName(name)
+"	let arg = 'k' . a:name . '\\'
+"	silent! exe '!echo -n "' . arg . "\""
+"endfunction
+"autocmd VimLeave * call SetScreenTabName('(zsh)')
+"autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("(vim %)") | endif 
+"}}} end Auto Command
+
+"### Custome Functions {{{
+
+"#### Change Directory
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+"#### unite, VimFiler
+let s:vsptabopen = {'description': 'open file in a new tab and vpsplit', 'is_selectable':1}
+
+function! s:vsptabopen.func(candidates)
+	for candidate in a:candidates
+		if candidate.action__path != ''
+			let l:path = candidate.action__path
+			tabedit +call\ s:vspcommand() `=l:path`
+		endif
+	endfor
+endfunction
+
+function! s:vspcommand()
+	vsplit +b\ vimfiler:side
+endfunction
+
+call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
+
+"}}} end Custome Functions
+
+"### Key Mappings {{{
+"#### prefix
+let mapleader = ","
+noremap \ ,
+
+"#### Change Current Directory to Buffer's dir.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
+"#### Tab Navigation
+noremap gh : <C-u>tabprevious<CR>
+noremap gl : <C-u>tabnext<CR>
+noremap gq : <C-u>tabclose<CR>
+
+"#### VimFiler
+nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
+
+"}}} end Key Mappings 
