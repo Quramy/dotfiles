@@ -163,4 +163,6 @@ noremap gq : <C-u>tabclose<CR>
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
 
+autocmd FileType vimfiler nmap <buffer> A :<C-u>Unite vsptabopen<CR>
+
 "}}} end Key Mappings 
