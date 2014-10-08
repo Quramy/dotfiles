@@ -140,7 +140,12 @@ function! s:vsptabopen.func(candidates)
 endfunction
 
 function! s:vspcommand()
-	vsplit +b\ vimfiler:side
+	vsplit +call\ s:aftervspcommand()
+endfunction
+
+function! s:aftervspcommand()
+	vertical resize 35
+	b vimfiler:side 
 endfunction
 
 call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
@@ -148,7 +153,7 @@ call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
 "}}} end Custome Functions
 
 "### Key Mappings {{{
-"#### prefix
+"#### Prefix
 let mapleader = ","
 noremap \ ,
 
@@ -162,7 +167,7 @@ noremap gq : <C-u>tabclose<CR>
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
+autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
 
-autocmd FileType vimfiler nmap <buffer> A :<C-u>Unite vsptabopen<CR>
 
 "}}} end Key Mappings 
