@@ -18,6 +18,7 @@ set hlsearch
 set showmatch
 set noincsearch
 set nowrapscan
+set expandtab
 set tabstop=2
 set shiftwidth=2
 set backspace=indent,eol,start
