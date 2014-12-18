@@ -60,6 +60,8 @@ NeoBundle 'vim-json-bundle'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
+NeoBundle 'dgryski/vim-godef'
+NeoBundle 'vim-jp/vim-go-extra'
 
 NeoBundle 'Shougo/neosnippet-snippets'
 
