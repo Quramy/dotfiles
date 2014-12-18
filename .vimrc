@@ -62,6 +62,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
+NeoBundle 'google/vim-ft-go'
 
 NeoBundle 'Shougo/neosnippet-snippets'
 
@@ -96,6 +97,7 @@ syntax on
 augroup vimrc_detect_filetype
 	autocmd!
 	autocmd BufNewFile,BufRead *.json set filetype=json
+	autocmd BufNewFile,BufRead *.go set filetype=go
 	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 	autocmd BufNewFile,BufRead *.ru set filetype=ruby
 
