@@ -37,7 +37,16 @@ if ostype=="win"
 	colorscheme evening
 endif
 
+"#### Onlu *nix
+if ostype=="nix"
+  set rtp+=$GOROOT/misc/vim
+  exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim/")
+endif
+
+set completeopt=menu
 "}}} end BasicSettings
+
+
 
 "### NeoBundle Configuration {{{
 set nocompatible
@@ -60,6 +69,8 @@ NeoBundle 'vim-json-bundle'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
+
+NeoBundle 'fatih/vim-go'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'google/vim-ft-go'
@@ -174,5 +185,9 @@ noremap gq : <C-u>tabclose<CR>
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
 autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
 
+"#### GoLang
+augroup golang_key_mapping
+  autocmd FileType go nmap <Leader>r <Plug>(go-run)
+augroup END
 
 "}}} end Key Mappings 
