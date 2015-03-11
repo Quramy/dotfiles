@@ -46,8 +46,6 @@ endif
 set completeopt=menu
 "}}} end BasicSettings
 
-
-
 "### NeoBundle Configuration {{{
 set nocompatible
 "filetype plugin indent off
@@ -65,6 +63,9 @@ NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'HTML5-Syntax-File'
 NeoBundle 'vim-json-bundle'
+
+NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
+NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
@@ -109,6 +110,7 @@ augroup vimrc_detect_filetype
 	autocmd!
 	autocmd BufNewFile,BufRead *.json set filetype=json
 	autocmd BufNewFile,BufRead *.go set filetype=go
+	autocmd BufNewFile,BufRead *.ts set filetype=typescript
 	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 	autocmd BufNewFile,BufRead *.ru set filetype=ruby
 
