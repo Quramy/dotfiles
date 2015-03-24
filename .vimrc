@@ -64,6 +64,8 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'HTML5-Syntax-File'
 NeoBundle 'vim-json-bundle'
 
+NeoBundle 'jason0x43/vim-js-indent'
+
 NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
 NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
@@ -71,10 +73,13 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
+NeoBundle 'thinca/vim-quickrun'
+
 NeoBundle 'fatih/vim-go'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'google/vim-ft-go'
+NeoBundle 'vim-jp/vital.vim'
 
 NeoBundle 'Shougo/neosnippet-snippets'
 
