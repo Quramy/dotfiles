@@ -105,6 +105,8 @@ NeoBundleLazy 'taichouchou2/rsense-0.3', {
 
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
 
+NeoBundle "first-plugin", {"base": "~/vim-plugins-dev", "type": "nosync"}
+
 syntax on
 
 " }}} NeoBundle Configuration end.
