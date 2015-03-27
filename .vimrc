@@ -67,7 +67,7 @@ NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
 
 NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
-NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
+"NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
@@ -105,7 +105,13 @@ NeoBundleLazy 'taichouchou2/rsense-0.3', {
 
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
 
-NeoBundle "first-plugin", {"base": "~/vim-plugins-dev", "type": "nosync"}
+"NeoBundle "first-plugin", {"base": "~/vim-plugins-dev", "type": "nosync"}
+NeoBundle "tsuquyomi", {"base": "~/vim-plugins-dev", "type": "nosync"}
+
+NeoBundle 'intuited/lh-vim-lib'
+NeoBundle 'intuited/lh-vim-ut'
+
+let g:tsuquyomi_use_dev_node_module=1
 
 syntax on
 
@@ -197,6 +203,10 @@ autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappi
 "#### GoLang
 augroup golang_key_mapping
   autocmd FileType go nmap <Leader>r <Plug>(go-run)
+augroup END
+
+augroup vim_script_ut
+  autocmd FileType vim nmap <Leader>ut : UTRun % <CR>
 augroup END
 
 "}}} end Key Mappings 
