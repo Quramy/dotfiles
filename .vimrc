@@ -35,6 +35,8 @@ if ostype=="win"
 	set nobackup
 	cd ~
 	colorscheme evening
+  let g:tsuquyomi_use_dev_node_module=2
+  let g:tsuquyomi_tsserver_path = "\\Users\\nriuser\\git\\TypeScript\\built\\local\\tsserver.js"
 endif
 
 "#### Onlu *nix
@@ -111,7 +113,6 @@ NeoBundle "tsuquyomi", {"base": "~/vim-plugins-dev", "type": "nosync"}
 NeoBundle 'intuited/lh-vim-lib'
 NeoBundle 'intuited/lh-vim-ut'
 
-let g:tsuquyomi_use_dev_node_module=1
 
 syntax on
 
