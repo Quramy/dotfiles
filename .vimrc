@@ -69,6 +69,7 @@ NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
 
 NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
+NeoBundle 'Quramy/tsuquyomi'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
 NeoBundle 'Shougo/vimproc'
@@ -107,8 +108,6 @@ NeoBundleLazy 'taichouchou2/rsense-0.3', {
 
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
 
-"NeoBundle "first-plugin", {"base": "~/vim-plugins-dev", "type": "nosync"}
-NeoBundle "tsuquyomi", {"base": "~/vim-plugins-dev", "type": "nosync"}
 
 NeoBundle 'intuited/lh-vim-lib'
 NeoBundle 'intuited/lh-vim-ut'
@@ -208,6 +207,12 @@ augroup END
 
 augroup vim_script_ut
   autocmd FileType vim nmap <Leader>ut : UTRun % <CR>
+augroup END
+
+"#### TypeScript
+augroup typescript_key_mapping
+  autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+  autocmd FileType setlocal ballooneval
 augroup END
 
 "}}} end Key Mappings 
