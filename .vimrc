@@ -43,6 +43,7 @@ endif
 if ostype=="nix"
   set rtp+=$GOROOT/misc/vim
   exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim/")
+  lang en_US
 endif
 
 set completeopt=menu
@@ -74,6 +75,7 @@ NeoBundle 'Quramy/tsuquyomi'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/vimfiler'
 
 NeoBundle 'thinca/vim-quickrun'
@@ -121,6 +123,7 @@ syntax on
 "#### File types
 augroup vimrc_detect_filetype
 	autocmd!
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
 	autocmd BufNewFile,BufRead *.json set filetype=json
 	autocmd BufNewFile,BufRead *.go set filetype=go
 	autocmd BufNewFile,BufRead *.ts set filetype=typescript
@@ -180,6 +183,17 @@ function! s:aftervspcommand()
 endfunction
 
 call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
+
+
+"### TSD install snipet
+function! s:tsd_install(...)
+  let search_words = map(range(1, a:{0}), 'a:{v:val}')
+  echo search_words
+  let res = system('tsd install '.join(search_words).' -rs')
+  echo res
+endfunction
+
+command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 
 "}}} end Custome Functions
 
