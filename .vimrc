@@ -28,7 +28,7 @@ set number
 set ambiwidth=double
 set foldmethod=marker
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-
+set clipboard=unnamed,autoselect
 
 "#### Only windows.
 if ostype=="win"
@@ -69,7 +69,8 @@ NeoBundle 'vim-json-bundle'
 
 NeoBundle 'jason0x43/vim-js-indent'
 
-NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
+"NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
+NeoBundle 'Quramy/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
