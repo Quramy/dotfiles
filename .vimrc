@@ -55,7 +55,9 @@ set nocompatible
 
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim/
-	call neobundle#rc(expand('~/.vim/bundle/'))
+
+  call neobundle#begin(expand('~/.vim/bundle/'))
+	"call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
 filetype plugin indent on
@@ -69,8 +71,8 @@ NeoBundle 'vim-json-bundle'
 
 NeoBundle 'jason0x43/vim-js-indent'
 
-"NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
-NeoBundle 'Quramy/typescript-vim'
+NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
+"NeoBundle 'Quramy/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
@@ -103,18 +105,22 @@ NeoBundleLazy 'Shougo/neosnippet', {
 NeoBundle 'Shougo/neocomplcache-rsense', {
 			\ 'depends': 'Shougo/neocomplcache',
 			\ 'autoload': { 'filetypes': 'ruby' }}
-NeoBundleLazy 'taichouchou2/rsense-0.3', {
-			\ 'build' : {
-			\    'mac': 'ruby etc/config.rb > ~/.rsense',
-			\    'unix': 'ruby etc/config.rb > ~/.rsense',
-			\ } }
 
-NeoBundle 'git://github.com/scrooloose/syntastic.git'
+" NeoBundleLazy 'taichouchou2/rsense-0.3', {
+" 			\ 'build' : {
+" 			\    'mac': 'ruby etc/config.rb > ~/.rsense',
+" 			\    'unix': 'ruby etc/config.rb > ~/.rsense',
+" 			\ } }
+
+"NeoBundle 'git://github.com/scrooloose/syntastic.git'
 
 
 NeoBundle 'intuited/lh-vim-lib'
 NeoBundle 'intuited/lh-vim-ut'
+"NeoBundle 'kana/vim-vspec'
+NeoBundle 'Shougo/vesting'
 
+call neobundle#end()
 
 syntax on
 
@@ -226,7 +232,10 @@ augroup END
 
 "#### TypeScript
 augroup typescript_key_mapping
+  autocmd FileType typescript setlocal completeopt=menu
   autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+  autocmd FileType typescript setlocal tabstop=4
+  autocmd FileType typescript setlocal shiftwidth=4
   autocmd FileType setlocal ballooneval
 augroup END
 
