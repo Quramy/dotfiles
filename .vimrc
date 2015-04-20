@@ -204,6 +204,35 @@ command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 
 "}}} end Custome Functions
 
+"### QuickRun {{{
+let g:quickrun_config = {}
+function! s:quickrun_switch(...)
+  if a:{0} && has_key(g:quickrun_config, a:{1})
+    let type_name = a:{1}
+    echo 'Quickrn switch type: '.type_name
+    let b:quickrun_config = g:quickrun_config[type_name]
+  endif
+endfunction
+function! s:quickrun_switch_complete(ArgLead, CmdLine, CursorPos)
+  let key_list = keys(g:quickrun_config)
+  let matched = []
+  for key_str in key_list
+    if stridx(key_str, a:ArgLead) == 0
+      call add(matched, key_str)
+    endif
+  endfor 
+  return matched
+endfunction
+command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
+"#### babel
+let g:quickrun_config['babel'] = {
+      \ 'cmdopt': '--stage 1',
+      \ 'exec': "babel %o %s | node"
+      \ }
+
+
+"### QuickRun }}}
+
 "### Key Mappings {{{
 "#### Prefix
 let mapleader = ","
