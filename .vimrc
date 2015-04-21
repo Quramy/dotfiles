@@ -51,57 +51,59 @@ set completeopt=menu
 
 "### NeoBundle Configuration {{{
 set nocompatible
-"filetype plugin indent off
 
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim/
-
   call neobundle#begin(expand('~/.vim/bundle/'))
-	"call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
 filetype plugin indent on
 NeoBundle 'altercation/vim-colors-solarized'
-"NeoBundle 'ZenCoding.vim'
+NeoBundle 'vim-jp/vimdoc-ja'
+
+"#### Core plugins
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler'
+
+"#### Tools across lang
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/vesting'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundleLazy 'Shougo/neocomplcache',{
+			\ 'autoload' :{
+			\	'insert':1,
+			\ }}
+NeoBundleLazy 'Shougo/neosnippet', {
+			\ 'autoload' : {
+			\   'insert' : 1,
+			\ }}
+"NeoBundle 'git://github.com/scrooloose/syntastic.git'
+
+"#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
+NeoBundle 'HTML5-Syntax-File'
+
+"#### JavaScript/JSON
 NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'HTML5-Syntax-File'
 NeoBundle 'vim-json-bundle'
-
 NeoBundle 'jason0x43/vim-js-indent'
 
-NeoBundle 'https://github.com/leafgarland/typescript-vim.git'
-"NeoBundle 'Quramy/typescript-vim'
+"#### TypeScript
+NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Shougo/vimfiler'
-
-NeoBundle 'thinca/vim-quickrun'
-
+"#### Golang
 NeoBundle 'fatih/vim-go'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'google/vim-ft-go'
 NeoBundle 'vim-jp/vital.vim'
 
-NeoBundle 'Shougo/neosnippet-snippets'
-
-NeoBundleLazy 'Shougo/neocomplcache',{
-			\ 'autoload' :{
-			\	'insert':1,
-			\ }}
-
-NeoBundleLazy 'Shougo/neosnippet', {
-			\ 'autoload' : {
-			\   'insert' : 1,
-			\ }}
-
-
+"#### Ruby
 NeoBundle 'Shougo/neocomplcache-rsense', {
 			\ 'depends': 'Shougo/neocomplcache',
 			\ 'autoload': { 'filetypes': 'ruby' }}
@@ -112,13 +114,10 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 " 			\    'unix': 'ruby etc/config.rb > ~/.rsense',
 " 			\ } }
 
-"NeoBundle 'git://github.com/scrooloose/syntastic.git'
-
-
-NeoBundle 'intuited/lh-vim-lib'
-NeoBundle 'intuited/lh-vim-ut'
-"NeoBundle 'kana/vim-vspec'
-NeoBundle 'Shougo/vesting'
+"#### developing
+NeoBundle 'vison', {
+      \ 'base': "~/workspaces/vim-script/"
+      \ }
 
 call neobundle#end()
 
@@ -136,6 +135,7 @@ augroup vimrc_detect_filetype
 	autocmd BufNewFile,BufRead *.ts set filetype=typescript
 	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 	autocmd BufNewFile,BufRead *.ru set filetype=ruby
+	autocmd BufNewFile,BufRead *.es6 set filetype=javascript
 
 	autocmd BufNewFile * set fenc=utf-8
 	autocmd BufNewFile *.bat set fenc=shift-jis
@@ -237,6 +237,8 @@ let g:quickrun_config['babel'] = {
 "#### Prefix
 let mapleader = ","
 noremap \ ,
+nnoremap [unite] <Nop>
+nmap <Space>u [unite]
 
 "#### Change Current Directory to Buffer's dir.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
@@ -245,6 +247,10 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 noremap gh : <C-u>tabprevious<CR>
 noremap gl : <C-u>tabnext<CR>
 noremap gq : <C-u>tabclose<CR>
+
+"#### Unite
+nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
