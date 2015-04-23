@@ -142,6 +142,8 @@ augroup vimrc_detect_filetype
 	if(ostype=="win")
 		autocmd BufNewFile *.txt set fenc=shift-jis
 	endif
+
+  autocmd BufNewFile,BufRead package.json VisonSwitch package.json
 augroup END
 "#### Screen Hacks 
 "function SetScreenTabName(name)
