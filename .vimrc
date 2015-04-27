@@ -90,6 +90,7 @@ NeoBundle 'JavaScript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
+NeoBundle 'Quramy/vison'
 
 "#### TypeScript
 NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
@@ -115,9 +116,6 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 " 			\ } }
 
 "#### developing
-NeoBundle 'vison', {
-      \ 'base': "~/workspaces/vim-script/"
-      \ }
 
 call neobundle#end()
 
@@ -143,7 +141,7 @@ augroup vimrc_detect_filetype
 		autocmd BufNewFile *.txt set fenc=shift-jis
 	endif
 
-  autocmd BufNewFile,BufRead package.json VisonSwitch package.json
+  autocmd BufNewFile,BufRead package.json Vison
 augroup END
 "#### Screen Hacks 
 "function SetScreenTabName(name)
