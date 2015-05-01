@@ -96,6 +96,9 @@ NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
+"#### CoffeeScript
+NeoBundle 'kchmck/vim-coffee-script'
+
 "#### Golang
 NeoBundle 'fatih/vim-go'
 NeoBundle 'dgryski/vim-godef'
@@ -136,6 +139,7 @@ augroup vimrc_detect_filetype
 	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 	autocmd BufNewFile,BufRead *.ru set filetype=ruby
 	autocmd BufNewFile,BufRead *.es6 set filetype=javascript
+	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 	autocmd BufNewFile * set fenc=utf-8
 	autocmd BufNewFile *.bat set fenc=shift-jis
