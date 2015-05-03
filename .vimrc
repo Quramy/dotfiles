@@ -145,8 +145,15 @@ augroup vimrc_detect_filetype
 		autocmd BufNewFile *.txt set fenc=shift-jis
 	endif
 
-  autocmd BufNewFile,BufRead package.json Vison
 augroup END
+
+augroup json_schema
+  autocmd BufNewFile,BufRead package.json Vison
+  autocmd BufNewFile,BufRead tsconfig.json Vison
+  autocmd BufNewFile,BufRead bower.json Vison
+  autocmd BufNewFile,BufRead .bowerrc vison bowerrc.json
+augroup END
+
 "#### Screen Hacks 
 "function SetScreenTabName(name)
 "	let arg = 'k' . a:name . '\\'
