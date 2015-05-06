@@ -283,6 +283,7 @@ augroup typescript_key_mapping
   autocmd FileType typescript setlocal tabstop=4
   autocmd FileType typescript setlocal shiftwidth=4
   autocmd FileType setlocal ballooneval
+  autocmd FileType typescript nmap <buffer> <Space>t : <C-u>echo tsuquyomi#hint()<CR>
 augroup END
 
 "}}} end Key Mappings 
