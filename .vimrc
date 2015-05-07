@@ -66,6 +66,8 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
+NeoBundle 'tpope/vim-fugitive'
+
 "#### Tools across lang
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Shougo/unite-outline'
