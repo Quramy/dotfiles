@@ -107,6 +107,8 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'google/vim-ft-go'
+
+"#### Vim script
 NeoBundle 'vim-jp/vital.vim'
 
 "#### Ruby
@@ -154,6 +156,11 @@ augroup json_schema
   autocmd BufNewFile,BufRead tsconfig.json Vison
   autocmd BufNewFile,BufRead bower.json Vison
   autocmd BufNewFile,BufRead .bowerrc vison bowerrc.json
+augroup END
+
+augroup golang
+  autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+  autocmd FileType go :match goErr /\<err\>/
 augroup END
 
 "#### Screen Hacks 
