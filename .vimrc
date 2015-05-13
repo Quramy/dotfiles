@@ -242,7 +242,9 @@ let g:quickrun_config['babel'] = {
       \ 'cmdopt': '--stage 1',
       \ 'exec': "babel %o %s | node"
       \ }
-
+let g:quickrun_config['coffee'] = {
+      \ 'exec': "coffee %o %s"
+      \ }
 
 "### QuickRun }}}
 
