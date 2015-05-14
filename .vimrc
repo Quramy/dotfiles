@@ -281,6 +281,7 @@ autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappi
 "#### GoLang
 augroup golang_key_mapping
   autocmd FileType go nmap <Leader>r <Plug>(go-run)
+  autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>call GodefUnderCursor() <CR>
 augroup END
 
 augroup vim_script_ut
