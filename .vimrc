@@ -136,19 +136,21 @@ augroup vimrc_detect_filetype
 	autocmd!
   autocmd BufNewFile,BufRead *.md set filetype=markdown
 	autocmd BufNewFile,BufRead *.json set filetype=json
-	autocmd BufNewFile,BufRead *.go set filetype=go
 	autocmd BufNewFile,BufRead *.ts set filetype=typescript
-	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
-	autocmd BufNewFile,BufRead *.ru set filetype=ruby
+	autocmd BufNewFile,BufRead *.es5 set filetype=javascript
 	autocmd BufNewFile,BufRead *.es6 set filetype=javascript
 	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+	autocmd BufNewFile,BufRead *.go set filetype=go
+	autocmd BufNewFile,BufRead *.ru set filetype=ruby
+	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
+augroup END
 
+augroup file_encoding
 	autocmd BufNewFile * set fenc=utf-8
-	autocmd BufNewFile *.bat set fenc=shift-jis
+	autocmd BufNewFile *.bat setlocal fenc=shift-jis
 	if(ostype=="win")
-		autocmd BufNewFile *.txt set fenc=shift-jis
+		autocmd BufNewFile *.txt setlocal fenc=shift-jis
 	endif
-
 augroup END
 
 augroup json_schema
@@ -175,14 +177,12 @@ augroup END
 "### Custome Functions {{{
 
 "#### Change Directory
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
-function! s:ChangeCurrentDir(directory, bang)
+function! s:change_current(directory, bang)
     if a:directory == ''
         lcd %:p:h
     else
         execute 'lcd' . a:directory
     endif
-
     if a:bang == ''
         pwd
     endif
@@ -190,7 +190,6 @@ endfunction
 
 "#### unite, VimFiler
 let s:vsptabopen = {'description': 'open file in a new tab and vpsplit', 'is_selectable':1}
-
 function! s:vsptabopen.func(candidates)
 	for candidate in a:candidates
 		if candidate.action__path != ''
@@ -208,11 +207,9 @@ function! s:aftervspcommand()
 	vertical resize 35
 	b vimfiler:side 
 endfunction
-
 call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
 
-
-"### TSD install snipet
+"#### TSD install snipet
 function! s:tsd_install(...)
   let search_words = map(range(1, a:{0}), 'a:{v:val}')
   echo search_words
@@ -220,11 +217,8 @@ function! s:tsd_install(...)
   echo res
 endfunction
 
-command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 
-"}}} end Custome Functions
-
-"### QuickRun {{{
+"#### QuickRun
 let g:quickrun_config = {}
 function! s:quickrun_switch(...)
   if a:{0} && has_key(g:quickrun_config, a:{1})
@@ -243,8 +237,6 @@ function! s:quickrun_switch_complete(ArgLead, CmdLine, CursorPos)
   endfor 
   return matched
 endfunction
-command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
-"#### babel
 let g:quickrun_config['babel'] = {
       \ 'cmdopt': '--stage 1',
       \ 'exec': "babel %o %s | node"
@@ -252,8 +244,16 @@ let g:quickrun_config['babel'] = {
 let g:quickrun_config['coffee'] = {
       \ 'exec': "coffee %o %s"
       \ }
+let g:quickrun_config['go'] = {
+      \ 'exec': "go run %s"
+      \ }
+"}}} end Custome Functions
 
-"### QuickRun }}}
+"### Original Commands {{{
+command! -nargs=? -complete=dir -bang ChangeCurrent  call s:change_current('<args>', '<bang>') 
+command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
+command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
+"}}} end Original Commands
 
 "### Key Mappings {{{
 "#### Prefix
@@ -261,9 +261,6 @@ let mapleader = ","
 noremap \ ,
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
-
-"#### Change Current Directory to Buffer's dir.
-nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 "#### Tab Navigation
 noremap gh : <C-u>tabprevious<CR>
@@ -278,15 +275,8 @@ nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
 autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
 
-"#### GoLang
-augroup golang_key_mapping
-  autocmd FileType go nmap <Leader>r <Plug>(go-run)
-  autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>call GodefUnderCursor() <CR>
-augroup END
-
-augroup vim_script_ut
-  autocmd FileType vim nmap <Leader>ut : UTRun % <CR>
-augroup END
+"#### Change Current Directory to Buffer's dir.
+nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
 
 "#### TypeScript
 augroup typescript_key_mapping
@@ -296,6 +286,11 @@ augroup typescript_key_mapping
   autocmd FileType typescript setlocal shiftwidth=4
   autocmd FileType setlocal ballooneval
   autocmd FileType typescript nmap <buffer> <Space>t : <C-u>echo tsuquyomi#hint()<CR>
+augroup END
+
+"#### GoLang
+augroup golang_key_mapping
+  autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>call GodefUnderCursor() <CR>
 augroup END
 
 "}}} end Key Mappings 
