@@ -160,9 +160,20 @@ augroup json_schema
   autocmd BufNewFile,BufRead .bowerrc vison bowerrc.json
 augroup END
 
+augroup typescript
+  autocmd FileType typescript setlocal completeopt=menu
+  autocmd FileType typescript setlocal tabstop=4
+  autocmd FileType typescript setlocal shiftwidth=4
+  "autocmd FileType typescript setlocal ballooneval
+augroup END
+
 augroup golang
   autocmd FileType go :highlight goErr cterm=bold ctermfg=214
   autocmd FileType go :match goErr /\<err\>/
+augroup END
+
+augroup keyward_hyphen
+  autocmd FileType xml,html,css,scss setlocal iskeyword+=-
 augroup END
 
 "#### Screen Hacks 
@@ -280,12 +291,8 @@ nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
 
 "#### TypeScript
 augroup typescript_key_mapping
-  autocmd FileType typescript setlocal completeopt=menu
   autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
   autocmd FileType typescript setlocal tabstop=4
-  autocmd FileType typescript setlocal shiftwidth=4
-  autocmd FileType setlocal ballooneval
-  autocmd FileType typescript nmap <buffer> <Space>t : <C-u>echo tsuquyomi#hint()<CR>
 augroup END
 
 "#### GoLang
