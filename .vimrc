@@ -47,6 +47,14 @@ if ostype=="nix"
   lang en_US
 endif
 
+"#### Only with x-term, iterm
+if &term ==# 'xterm-256color'
+  set title
+  set t_ts=]1;
+  set t_fs=
+  let &titleold=''
+endif
+
 set completeopt=menu
 "}}} end BasicSettings
 
@@ -129,78 +137,32 @@ syntax on
 
 " }}} NeoBundle Configuration end.
 
-"### Auto Command {{{
-"#### File types
-augroup vimrc_detect_filetype
-	autocmd!
-  autocmd BufNewFile,BufRead *.md     set filetype=markdown
-	autocmd BufNewFile,BufRead *.json   set filetype=json
-	autocmd BufNewFile,BufRead *.ts     set filetype=typescript
-	autocmd BufNewFile,BufRead *.es5    set filetype=javascript
-	autocmd BufNewFile,BufRead *.es6    set filetype=javascript
-	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-	autocmd BufNewFile,BufRead *.go     set filetype=go
-	autocmd BufNewFile,BufRead *.ru     set filetype=ruby
-	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
-augroup END
-
-augroup file_encoding
-	autocmd BufNewFile *        setlocal fenc=utf-8
-	autocmd BufNewFile *.bat    setlocal fenc=shift-jis
-	if(ostype=="win")
-		autocmd BufNewFile *.txt  setlocal fenc=shift-jis
-	endif
-augroup END
-
-augroup json_schema
-  autocmd BufNewFile,BufRead package.json Vison
-  autocmd BufNewFile,BufRead tsconfig.json Vison
-  autocmd BufNewFile,BufRead bower.json Vison
-  autocmd BufNewFile,BufRead .bowerrc vison bowerrc.json
-augroup END
-
-augroup typescript
-  autocmd FileType typescript setlocal completeopt=menu
-  autocmd FileType typescript setlocal tabstop=4
-  autocmd FileType typescript setlocal shiftwidth=4
-  "autocmd FileType typescript setlocal ballooneval
-augroup END
-
-augroup golang
-  autocmd FileType go :highlight goErr cterm=bold ctermfg=214
-  autocmd FileType go :match goErr /\<err\>/
-augroup END
-
-augroup keyward_hyphen
-  autocmd FileType xml,html,css,scss setlocal iskeyword+=-
-augroup END
-
-"#### Screen Hacks 
-"function SetScreenTabName(name)
-"	let arg = 'k' . a:name . '\\'
-"	silent! exe '!echo -n "' . arg . "\""
-"endfunction
-"autocmd VimLeave * call SetScreenTabName('(zsh)')
-"autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("(vim %)") | endif 
-"}}} end Auto Command
-
 "### Custome Functions {{{
+
+"#### Change iterm title
+function! g:Change_title(basename)
+  let cmd = shellescape('echo -ne "\\e]1;aaaa\\a"')
+  echo cmd
+  call system(cmd)
+  "silent execute '!echo -ne "\e]1;aaaa\a"'
+endfunction
 
 "#### Change Directory
 function! s:change_current(directory, bang)
-    if a:directory == ''
-        lcd %:p:h
-    else
-        execute 'lcd' . a:directory
-    endif
-    if a:bang == ''
-        pwd
-    endif
+  if a:directory == ''
+    lcd %:p:h
+  else
+    execute 'lcd' . a:directory
+  endif
+  if a:bang == ''
+    pwd
+  endif
 endfunction
 
 "#### unite, VimFiler
 let s:vsptabopen = {'description': 'open file in a new tab and vpsplit', 'is_selectable':1}
 function! s:vsptabopen.func(candidates)
+  winc l
 	for candidate in a:candidates
 		if candidate.action__path != ''
 			let l:path = candidate.action__path
@@ -216,6 +178,7 @@ endfunction
 function! s:aftervspcommand()
 	vertical resize 35
 	b vimfiler:side 
+  winc l
 endfunction
 call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
 
@@ -293,6 +256,61 @@ command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
 command! GoGoBack : call s:go_go_back()
 "}}} end Original Commands
 
+"### Auto Command {{{
+"#### File types
+augroup vimrc_detect_filetype
+	autocmd!
+  autocmd BufNewFile,BufRead *.md     set filetype=markdown
+	autocmd BufNewFile,BufRead *.json   set filetype=json
+	autocmd BufNewFile,BufRead *.ts     set filetype=typescript
+	autocmd BufNewFile,BufRead *.es5    set filetype=javascript
+	autocmd BufNewFile,BufRead *.es6    set filetype=javascript
+	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+	autocmd BufNewFile,BufRead *.go     set filetype=go
+	autocmd BufNewFile,BufRead *.ru     set filetype=ruby
+	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
+augroup END
+
+augroup file_encoding
+	autocmd BufNewFile *        setlocal fenc=utf-8
+	autocmd BufNewFile *.bat    setlocal fenc=shift-jis
+	if ostype=="win"
+		autocmd BufNewFile *.txt  setlocal fenc=shift-jis
+	endif
+augroup END
+
+augroup json_schema
+  autocmd BufNewFile,BufRead package.json Vison
+  autocmd BufNewFile,BufRead tsconfig.json Vison
+  autocmd BufNewFile,BufRead bower.json Vison
+  autocmd BufNewFile,BufRead .bowerrc vison bowerrc.json
+augroup END
+
+augroup typescript
+  autocmd FileType typescript setlocal completeopt=menu
+  autocmd FileType typescript setlocal tabstop=4
+  autocmd FileType typescript setlocal shiftwidth=4
+  "autocmd FileType typescript setlocal ballooneval
+augroup END
+
+augroup golang
+  autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+  autocmd FileType go :match goErr /\<err\>/
+augroup END
+
+augroup keyward_hyphen
+  autocmd FileType xml,html,css,scss setlocal iskeyword+=-
+augroup END
+
+"#### Screen Hacks 
+"function SetScreenTabName(name)
+"	let arg = 'k' . a:name . '\\'
+"	silent! exe '!echo -n "' . arg . "\""
+"endfunction
+"autocmd VimLeave * call SetScreenTabName('(zsh)')
+"autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("(vim %)") | endif 
+"}}} end Auto Command
+
 "### Key Mappings {{{
 "#### Prefix
 let mapleader = ","
@@ -311,7 +329,9 @@ nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit -buffer-name=side<CR>
-autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
+augroup vimfiler_key_mapping
+  autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
+augroup END
 
 "#### Change Current Directory to Buffer's dir.
 nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
@@ -319,7 +339,6 @@ nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
 "#### TypeScript
 augroup typescript_key_mapping
   autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
-  autocmd FileType typescript setlocal tabstop=4
 augroup END
 
 "#### GoLang
