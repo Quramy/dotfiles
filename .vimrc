@@ -10,6 +10,7 @@ endif
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 set fileformats=unix,dos,mac
+set nocompatible
 set background=light
 set noerrorbells
 set ignorecase
@@ -39,7 +40,7 @@ if ostype=="win"
   let g:tsuquyomi_tsserver_path = "\\Users\\nriuser\\git\\TypeScript\\built\\local\\tsserver.js"
 endif
 
-"#### Onlu *nix
+"#### Only *nix
 if ostype=="nix"
   set rtp+=$GOROOT/misc/vim
   exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim/")
@@ -50,8 +51,6 @@ set completeopt=menu
 "}}} end BasicSettings
 
 "### NeoBundle Configuration {{{
-set nocompatible
-
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim/
   call neobundle#begin(expand('~/.vim/bundle/'))
@@ -134,22 +133,22 @@ syntax on
 "#### File types
 augroup vimrc_detect_filetype
 	autocmd!
-  autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd BufNewFile,BufRead *.json set filetype=json
-	autocmd BufNewFile,BufRead *.ts set filetype=typescript
-	autocmd BufNewFile,BufRead *.es5 set filetype=javascript
-	autocmd BufNewFile,BufRead *.es6 set filetype=javascript
+  autocmd BufNewFile,BufRead *.md     set filetype=markdown
+	autocmd BufNewFile,BufRead *.json   set filetype=json
+	autocmd BufNewFile,BufRead *.ts     set filetype=typescript
+	autocmd BufNewFile,BufRead *.es5    set filetype=javascript
+	autocmd BufNewFile,BufRead *.es6    set filetype=javascript
 	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-	autocmd BufNewFile,BufRead *.go set filetype=go
-	autocmd BufNewFile,BufRead *.ru set filetype=ruby
+	autocmd BufNewFile,BufRead *.go     set filetype=go
+	autocmd BufNewFile,BufRead *.ru     set filetype=ruby
 	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 augroup END
 
 augroup file_encoding
-	autocmd BufNewFile * set fenc=utf-8
-	autocmd BufNewFile *.bat setlocal fenc=shift-jis
+	autocmd BufNewFile *        setlocal fenc=utf-8
+	autocmd BufNewFile *.bat    setlocal fenc=shift-jis
 	if(ostype=="win")
-		autocmd BufNewFile *.txt setlocal fenc=shift-jis
+		autocmd BufNewFile *.txt  setlocal fenc=shift-jis
 	endif
 augroup END
 
@@ -228,7 +227,6 @@ function! s:tsd_install(...)
   echo res
 endfunction
 
-
 "#### QuickRun
 let g:quickrun_config = {}
 function! s:quickrun_switch(...)
@@ -258,12 +256,41 @@ let g:quickrun_config['coffee'] = {
 let g:quickrun_config['go'] = {
       \ 'exec': "go run %s"
       \ }
+
+"#### Golang navigation
+let s:go_navigattion_stack = {}
+function! s:go_create_nav_info()
+  return {'filename': expand('%:p'), 'line': line('.'), 'col': col('.')}
+endfunction
+function! s:go_go_def()
+  let pre_position = s:go_create_nav_info()
+  call go#def#Jump()
+  let position = s:go_create_nav_info()
+  if pre_position != position
+    let win_num = winbufnr('%:p')
+    if !has_key(s:go_navigattion_stack, win_num)
+      let s:go_navigattion_stack[win_num] = []
+    endif
+    call add(s:go_navigattion_stack[win_num], pre_position)
+  endif
+endfunction
+function! s:go_go_back()
+  let win_num = winbufnr('%:p')
+  if !has_key(s:go_navigattion_stack, win_num) || !len(s:go_navigattion_stack[win_num])
+    echom 'No item in navigation stack'
+    return
+  endif
+  let position = remove(s:go_navigattion_stack[win_num], -1)
+  execute 'edit +call\ cursor('.position.line.','.position.col.') '.position.filename
+endfunction
 "}}} end Custome Functions
 
 "### Original Commands {{{
 command! -nargs=? -complete=dir -bang ChangeCurrent  call s:change_current('<args>', '<bang>') 
 command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
+command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
+command! GoGoBack : call s:go_go_back()
 "}}} end Original Commands
 
 "### Key Mappings {{{
@@ -297,7 +324,8 @@ augroup END
 
 "#### GoLang
 augroup golang_key_mapping
-  autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>call GodefUnderCursor() <CR>
+  autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
+  autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
 augroup END
 
 "}}} end Key Mappings 
