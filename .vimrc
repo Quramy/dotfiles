@@ -36,8 +36,6 @@ if ostype=="win"
 	set nobackup
 	cd ~
 	colorscheme evening
-  let g:tsuquyomi_use_dev_node_module=2
-  let g:tsuquyomi_tsserver_path = "\\Users\\nriuser\\git\\TypeScript\\built\\local\\tsserver.js"
 endif
 
 "#### Only *nix
@@ -290,6 +288,7 @@ augroup typescript
   autocmd FileType typescript setlocal completeopt=menu
   autocmd FileType typescript setlocal tabstop=4
   autocmd FileType typescript setlocal shiftwidth=4
+  autocmd FileType typescript setlocal foldmethod=syntax
   "autocmd FileType typescript setlocal ballooneval
 augroup END
 
