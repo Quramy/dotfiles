@@ -93,7 +93,7 @@ NeoBundle 'vim-scripts/Emmet.vim'
 NeoBundle 'HTML5-Syntax-File'
 
 "#### JavaScript/JSON
-NeoBundle 'JavaScript-syntax'
+NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
@@ -282,6 +282,10 @@ augroup json_schema
   autocmd BufNewFile,BufRead tsconfig.json Vison
   autocmd BufNewFile,BufRead bower.json Vison
   autocmd BufNewFile,BufRead .bowerrc vison bowerrc.json
+augroup END
+
+augroup javascript
+  au FileType javascript call JavaScriptFold()
 augroup END
 
 augroup typescript
