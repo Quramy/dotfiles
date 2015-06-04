@@ -113,6 +113,10 @@ NeoBundle 'dgryski/vim-godef'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'google/vim-ft-go'
 
+"#### CSS, SCSS
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'cakebaker/scss-syntax.vim'
+
 "#### Vim script
 NeoBundle 'vim-jp/vital.vim'
 
