@@ -17,6 +17,7 @@ set ignorecase
 set smartcase
 set hlsearch
 set showmatch
+set nowritebackup
 set noincsearch
 set nowrapscan
 set expandtab
