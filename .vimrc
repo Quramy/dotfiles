@@ -90,6 +90,7 @@ NeoBundleLazy 'Shougo/neosnippet', {
 "NeoBundle 'git://github.com/scrooloose/syntastic.git'
 
 NeoBundle 'ekalinin/Dockerfile.vim'
+NeoBundle 'joker1007/vim-markdown-quote-syntax'
 
 "#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
@@ -101,6 +102,7 @@ NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
 NeoBundle 'Quramy/vison'
+NeoBundle 'Quramy/vim-js-pretty-template'
 
 "#### TypeScript
 NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
@@ -317,11 +319,16 @@ augroup javascript
   au FileType javascript call JavaScriptFold()
 augroup END
 
+augroup coffee
+  au FileType coffee JsPreTmpl html
+augroup END
+
 augroup typescript
   autocmd FileType typescript setlocal completeopt=menu
   autocmd FileType typescript setlocal tabstop=4
   autocmd FileType typescript setlocal shiftwidth=4
   autocmd FileType typescript setlocal foldmethod=syntax
+  autocmd FileType typescript JsPreTmpl html
   "autocmd FileType typescript setlocal ballooneval
 augroup END
 
@@ -342,6 +349,16 @@ augroup END
 "autocmd VimLeave * call SetScreenTabName('(zsh)')
 "autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("(vim %)") | endif 
 "}}} end Auto Command
+
+"### Plugin Settings {{{
+"#### Markdown Syntax
+let g:markdown_quate_syntax_filetypes = {
+      \ "typescript": {
+      \   "start": "typescript",
+      \   },
+      \ }
+
+"}}} end Plugin Settings
 
 "### Key Mappings {{{
 "#### Prefix
