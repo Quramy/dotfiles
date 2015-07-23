@@ -292,6 +292,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.md     set filetype=markdown
 	autocmd BufNewFile,BufRead *.json   set filetype=json
 	autocmd BufNewFile,BufRead *.ts     set filetype=typescript
+	autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
 	autocmd BufNewFile,BufRead *.es5    set filetype=javascript
 	autocmd BufNewFile,BufRead *.es6    set filetype=javascript
 	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
@@ -329,6 +330,7 @@ augroup typescript
   autocmd FileType typescript setlocal shiftwidth=4
   autocmd FileType typescript setlocal foldmethod=syntax
   autocmd FileType typescript JsPreTmpl html
+  autocmd FileType typescript syn clear foldBraces
   "autocmd FileType typescript setlocal ballooneval
 augroup END
 
@@ -351,6 +353,10 @@ augroup END
 "}}} end Auto Command
 
 "### Plugin Settings {{{
+"#### tsuquyomi
+let g:tsuquyomi_use_dev_node_module = 2
+let g:tsuquyomi_tsserver_path = "/Users/yosuke/git/TypeScript/bin/tsserver.js"
+
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
       \ "typescript": {
