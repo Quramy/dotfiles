@@ -353,10 +353,6 @@ augroup END
 "}}} end Auto Command
 
 "### Plugin Settings {{{
-"#### tsuquyomi
-let g:tsuquyomi_use_dev_node_module = 2
-let g:tsuquyomi_tsserver_path = "/Users/yosuke/git/TypeScript/bin/tsserver.js"
-
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
       \ "typescript": {
@@ -394,6 +390,7 @@ nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
 "#### TypeScript
 augroup typescript_key_mapping
   autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+  autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
 augroup END
 
 "#### GoLang
