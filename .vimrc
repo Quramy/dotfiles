@@ -32,6 +32,8 @@ set foldmethod=marker
 "set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set clipboard=unnamed,autoselect
 
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 10
+
 "#### Only windows.
 if ostype=="win"
 	set nobackup
@@ -135,6 +137,9 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 " 			\    'mac': 'ruby etc/config.rb > ~/.rsense',
 " 			\    'unix': 'ruby etc/config.rb > ~/.rsense',
 " 			\ } }
+
+"#### fonts
+"NeoBundle 'ryanoasis/vim-devicons'
 
 "#### developing
 
@@ -377,6 +382,8 @@ noremap gq : <C-u>tabclose<CR>
 "#### Unite
 nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
 nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
+nnoremap <silent> [unite]p :<C-u>Unite<Space>-start-insert<Space>file_rec/git:.<CR>
+nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=42 -no-quit -buffer-name=side<CR>
