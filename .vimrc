@@ -109,6 +109,7 @@ NeoBundle 'Quramy/vim-js-pretty-template'
 "#### TypeScript
 NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
+NeoBundle 'Quramy/vim-dtsm'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
 "#### CoffeeScript
