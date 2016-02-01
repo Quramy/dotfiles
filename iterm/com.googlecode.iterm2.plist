@@ -100,11 +100,11 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>332 292 924 485 0 0 1280 777 </string>
+	<string>332 292 605 485 0 0 1280 777 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>2048 998 384 129 1280 302 1920 1057 </string>
+	<string>448 486 384 129 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>145 88 1096 572 0 0 1280 777 </string>
+	<string>0 65 1264 712 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>152 50 490 376 0 0 1280 777 </string>
 	<key>NeverWarnAboutShortLivedSessions_42DCE450-3A26-4CED-87B6-0BE1BF5A4CD3</key>
@@ -842,7 +842,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>453197276.48793501</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>461226199.29115701</real>
+	<real>475521392.88169599</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -905,11 +905,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.com/appcasts/testing.xml</string>
+	<string>https://iterm2.com/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-08-19T01:46:11Z</date>
+	<date>2016-01-26T17:13:20Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -950,7 +950,11 @@
 	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findIgnoreCase_iTerm</key>
+	<true/>
+	<key>findRegex_iTerm</key>
+	<false/>
 	<key>iTerm Version</key>
-	<string>2.1.1</string>
+	<string>2.1.4</string>
 </dict>
 </plist>

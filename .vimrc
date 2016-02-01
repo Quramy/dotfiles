@@ -30,7 +30,7 @@ set number
 set ambiwidth=double
 set foldmethod=marker
 "set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-set clipboard=unnamed,autoselect
+set clipboard=unnamed
 
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 10
 
