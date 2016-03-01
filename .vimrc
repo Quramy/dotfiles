@@ -65,7 +65,6 @@ if has('vim_starting')
 endif
 
 filetype plugin indent on
-NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-jp/vimdoc-ja'
 
 "#### Core plugins
@@ -74,9 +73,11 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
 NeoBundle 'tpope/vim-fugitive'
+
+"#### Theme
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
-
+NeoBundle 'altercation/vim-colors-solarized'
 
 "#### Tools across lang
 NeoBundle 'thinca/vim-quickrun'
@@ -148,7 +149,8 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 
 call neobundle#end()
 
-syntax on
+syntax enable
+colorscheme solarized
 
 " }}} NeoBundle Configuration end.
 
@@ -341,9 +343,8 @@ augroup END
 
 "### Plugin Settings {{{
 "#### Airline
-let g:airline_theme='papercolor'
 let g:airline#extensions#tabline#enabled = 1
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
 let g:airline_left_sep = '⮀'
 let g:airline_right_sep = '⮂'
 let g:airline_linecolumn_prefix = '⭡'
