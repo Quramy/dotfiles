@@ -29,7 +29,6 @@ set showcmd
 set number
 set ambiwidth=double
 set foldmethod=marker
-"set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set clipboard=unnamed
 
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 10
@@ -75,6 +74,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'bling/vim-airline'
 
 "#### Tools across lang
 NeoBundle 'thinca/vim-quickrun'
@@ -259,23 +259,6 @@ function! s:go_go_back()
   let position = remove(s:go_navigattion_stack[win_num], -1)
   execute 'edit +call\ cursor('.position.line.','.position.col.') '.position.filename
 endfunction
-
-"#### status line
-function! s:create_status()
-  let l:res = system('git branch')
-  if stridx(l:res, 'fatal: Not a git repository') != -1
-    let g:git_branch_name = 'not git'
-  else
-    let l:list = split(l:res, '\n')
-    let l:branch = filter(l:list, 'stridx(v:val, "*") == 0')
-    if len(l:branch) == 1
-      let g:git_branch_name = l:branch[0]
-    else
-      let g:git_branch_name = 'no branch'
-    endif
-  endif
-  set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.g:git_branch_name.']['.&ff.']'}%=%l,%c%V%8P
-endfunction
 "}}} end Custom Functions
 
 "### Original Commands {{{
@@ -289,10 +272,6 @@ command! GoGoBack : call s:go_go_back()
 "### Auto Command {{{
 "#### File types
 
-augroup status_line
-  autocmd!
-  autocmd BufNewFile,BufRead * call s:create_status()
-augroup END
 augroup vimrc_detect_filetype
 	autocmd!
   autocmd BufNewFile,BufRead *.md     set filetype=markdown
