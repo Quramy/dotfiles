@@ -343,12 +343,15 @@ augroup END
 
 "### Plugin Settings {{{
 "#### Airline
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 let g:airline#extensions#tabline#enabled = 1
-"let g:Powerline_symbols = 'fancy'
 let g:airline_left_sep = '⮀'
 let g:airline_right_sep = '⮂'
-let g:airline_linecolumn_prefix = '⭡'
-let g:airline_branch_prefix = '⭠'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮀'
 
