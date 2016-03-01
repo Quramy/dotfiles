@@ -30,8 +30,8 @@ set number
 set ambiwidth=double
 set foldmethod=marker
 set clipboard=unnamed
-
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 10
+set t_Co=256
+set guifont=Ricty\ Regular\ for\ Powerline:h14
 
 "#### Only windows.
 if ostype=="win"
@@ -74,7 +74,9 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
+
 
 "#### Tools across lang
 NeoBundle 'thinca/vim-quickrun'
@@ -338,6 +340,17 @@ augroup END
 "}}} end Auto Command
 
 "### Plugin Settings {{{
+"#### Airline
+let g:airline_theme='papercolor'
+let g:airline#extensions#tabline#enabled = 1
+let g:Powerline_symbols = 'fancy'
+let g:airline_left_sep = '⮀'
+let g:airline_right_sep = '⮂'
+let g:airline_linecolumn_prefix = '⭡'
+let g:airline_branch_prefix = '⭠'
+let g:airline#extensions#tabline#left_sep = '⮀'
+let g:airline#extensions#tabline#left_alt_sep = '⮀'
+
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
       \ "typescript": {
@@ -386,5 +399,6 @@ augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
   autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
 augroup END
+
 
 "}}} end Key Mappings 
