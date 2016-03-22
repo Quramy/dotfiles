@@ -73,6 +73,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
 
 "#### Theme
 NeoBundle 'vim-airline/vim-airline'
@@ -144,6 +145,12 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 
 "#### fonts
 "NeoBundle 'ryanoasis/vim-devicons'
+
+"#### Twitter
+NeoBundle 'TwitVim'
+
+"#### for Nyaovim
+NeoBundle 'rhysd/nyaovim-running-gopher'
 
 "#### developing
 
@@ -235,6 +242,9 @@ let g:quickrun_config['coffee'] = {
       \ }
 let g:quickrun_config['go'] = {
       \ 'exec': "go run %s"
+      \ }
+let g:quickrun_config['typescriptProject'] = {
+      \ 'exec': ["tsc --outDir .", "node %s:p:r.js"]
       \ }
 
 "#### Golang navigation
@@ -361,6 +371,11 @@ let g:markdown_quate_syntax_filetypes = {
       \   "start": "typescript",
       \   },
       \ }
+
+"#### TwitVim
+let twitvim_browser_cmd = 'open'
+let twitvim_enable_python = 1
+let twitvim_count = 40
 
 "}}} end Plugin Settings
 
