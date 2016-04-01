@@ -97,6 +97,7 @@ NeoBundleLazy 'Shougo/neosnippet', {
 
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
+NeoBundle 'editorconfig/editorconfig-vim'
 
 "#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
