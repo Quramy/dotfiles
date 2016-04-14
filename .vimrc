@@ -93,7 +93,7 @@ NeoBundleLazy 'Shougo/neosnippet', {
 			\ 'autoload' : {
 			\   'insert' : 1,
 			\ }}
-"NeoBundle 'git://github.com/scrooloose/syntastic.git'
+NeoBundle 'scrooloose/syntastic'
 
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
@@ -162,6 +162,9 @@ colorscheme solarized
 " }}} NeoBundle Configuration end.
 
 "### Custom Functions {{{
+let s:v = vital#of('vital')
+let s:prelude = s:v.import('Prelude')
+let s:fpath = s:v.import('System.Filepath')
 
 "#### Change iterm title
 function! g:Change_title(basename)
@@ -169,6 +172,16 @@ function! g:Change_title(basename)
   echo cmd
   call system(cmd)
   "silent execute '!echo -ne "\e]1;aaaa\a"'
+endfunction
+
+"#### Directory Utility
+function! s:prj_has(fname) abort
+  let prj_root = s:prelude.path2project_directory(expand('%'))
+  if prj_root ==''
+    return [0, '']
+  endif
+  let path = s:fpath.join(prj_root, a:fname)
+  return [1, path]
 endfunction
 
 "#### Change Directory
@@ -273,6 +286,19 @@ function! s:go_go_back()
   let position = remove(s:go_navigattion_stack[win_num], -1)
   execute 'edit +call\ cursor('.position.line.','.position.col.') '.position.filename
 endfunction
+
+function! s:syntastic_configure()
+  if &filetype == 'typescript'
+    let checkers = ['tsuquyomi']
+    let hasTslint = s:prj_has('tslint.json')
+    if s:prj_has('tslint.json')[0]
+      call add(checkers, 'tslint')
+    endif
+    echo checkers
+    let b:syntastic_checkers = checkers
+  endif
+endfunction
+
 "}}} end Custom Functions
 
 "### Original Commands {{{
@@ -281,6 +307,7 @@ command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
 command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
 command! GoGoBack : call s:go_go_back()
+command! SyntasticConfigure : call s:syntastic_configure()
 "}}} end Original Commands
 
 "### Auto Command {{{
@@ -324,6 +351,7 @@ augroup coffee
 augroup END
 
 augroup typescript
+  autocmd FileType typescript SyntasticConfigure
   autocmd FileType typescript setlocal completeopt=menu
   autocmd FileType typescript setlocal tabstop=4
   autocmd FileType typescript setlocal shiftwidth=4
@@ -364,6 +392,10 @@ let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮀'
+
+"#### Syntastic checker
+let g:tsuquyomi_disable_quickfix = 1
+"let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
