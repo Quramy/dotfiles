@@ -294,7 +294,6 @@ function! s:syntastic_configure()
     if s:prj_has('tslint.json')[0]
       call add(checkers, 'tslint')
     endif
-    echo checkers
     let b:syntastic_checkers = checkers
   endif
 endfunction
