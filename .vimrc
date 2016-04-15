@@ -291,14 +291,29 @@ function! s:go_go_back()
   execute 'edit +call\ cursor('.position.line.','.position.col.') '.position.filename
 endfunction
 
-function! s:syntastic_configure()
-  if &filetype == 'typescript'
-    let checkers = ['tsuquyomi']
-    let hasTslint = s:prj_has('tslint.json')
-    if s:prj_has('tslint.json')[0]
-      call add(checkers, 'tslint')
+let s:syntastic_config = {}
+
+function! s:syntastic_config.typescript() abort dict
+  if s:prj_has('tslint.json')[0]
+    return ['tsuquyomi', 'tslint']
+  else
+    return ['tsuquyomi']
+  endif
+endfunction
+
+function! s:syntastic_config.javascript() abort dict
+  if s:prj_has('.eslintrc')[0] || s:prj_has('.eslintrc.js')[0] || s:prj_has('.eslintrc.yml')[0]
+    let [has, eslint_path] = s:prj_has('node_modules/.bin/eslint')
+    if has
+      let b:syntastic_javascript_eslint_exec = eslint_path
     endif
-    let b:syntastic_checkers = checkers
+    return ['eslint']
+  endif
+endfunction
+
+function! s:syntastic_buffer_configure()
+  if has_key(s:syntastic_config, &filetype)
+    let b:syntastic_checkers = s:syntastic_config[&filetype]()
   endif
 endfunction
 
@@ -311,32 +326,32 @@ command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
 command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
 command! GoGoBack : call s:go_go_back()
-command! SyntasticConfigure : call s:syntastic_configure()
+command! SyntasticBufferConfigure : call s:syntastic_buffer_configure()
 "}}} end Original Commands
 
 "### Auto Command {{{
 "#### File types
 
 augroup vimrc_detect_filetype
-	autocmd!
+  autocmd!
   autocmd BufNewFile,BufRead *.md     set filetype=markdown
-	autocmd BufNewFile,BufRead *.json   set filetype=json
-	autocmd BufNewFile,BufRead *.ts     set filetype=typescript
-	autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
-	autocmd BufNewFile,BufRead *.es5    set filetype=javascript
-	autocmd BufNewFile,BufRead *.es6    set filetype=javascript
-	autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-	autocmd BufNewFile,BufRead *.go     set filetype=go
-	autocmd BufNewFile,BufRead *.ru     set filetype=ruby
-	autocmd BufNewFile,BufRead *.gradle set filetype=groovy
+  autocmd BufNewFile,BufRead *.json   set filetype=json
+  autocmd BufNewFile,BufRead *.ts     set filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
+  autocmd BufNewFile,BufRead *.es5    set filetype=javascript
+  autocmd BufNewFile,BufRead *.es6    set filetype=javascript
+  autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+  autocmd BufNewFile,BufRead *.go     set filetype=go
+  autocmd BufNewFile,BufRead *.ru     set filetype=ruby
+  autocmd BufNewFile,BufRead *.gradle set filetype=groovy
 augroup END
 
 augroup file_encoding
-	autocmd BufNewFile *        setlocal fenc=utf-8
-	autocmd BufNewFile *.bat    setlocal fenc=shift-jis
-	if ostype=="win"
-		autocmd BufNewFile *.txt  setlocal fenc=shift-jis
-	endif
+  autocmd BufNewFile *        setlocal fenc=utf-8
+  autocmd BufNewFile *.bat    setlocal fenc=shift-jis
+  if ostype=="win"
+    autocmd BufNewFile *.txt  setlocal fenc=shift-jis
+  endif
 augroup END
 
 augroup json_schema
@@ -347,7 +362,9 @@ augroup json_schema
 augroup END
 
 augroup javascript
+  autocmd FileType javascript SyntasticBufferConfigure
   "au FileType javascript call JavaScriptFold()
+  au FileType javascript JsPreTmpl html
 augroup END
 
 augroup coffee
@@ -355,7 +372,7 @@ augroup coffee
 augroup END
 
 augroup typescript
-  autocmd FileType typescript SyntasticConfigure
+  autocmd FileType typescript SyntasticBufferConfigure
   autocmd FileType typescript setlocal completeopt=menu
   autocmd FileType typescript setlocal tabstop=4
   autocmd FileType typescript setlocal shiftwidth=4
