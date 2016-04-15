@@ -177,11 +177,15 @@ endfunction
 "#### Directory Utility
 function! s:prj_has(fname) abort
   let prj_root = s:prelude.path2project_directory(expand('%'))
-  if prj_root ==''
+  if prj_root == ''
     return [0, '']
   endif
   let path = s:fpath.join(prj_root, a:fname)
-  return [1, path]
+  if filereadable(path)
+    return [1, path]
+  else
+    return [0, '']
+  endif
 endfunction
 
 "#### Change Directory
@@ -301,6 +305,7 @@ endfunction
 "}}} end Custom Functions
 
 "### Original Commands {{{
+command! -nargs=1 PrjHas :echo s:prj_has(<q-args>)[1]
 command! -nargs=? -complete=dir -bang ChangeCurrent  call s:change_current('<args>', '<bang>') 
 command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
