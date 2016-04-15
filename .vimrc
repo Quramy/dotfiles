@@ -166,14 +166,6 @@ let s:v = vital#of('vital')
 let s:prelude = s:v.import('Prelude')
 let s:fpath = s:v.import('System.Filepath')
 
-"#### Change iterm title
-function! g:Change_title(basename)
-  let cmd = shellescape('echo -ne "\\e]1;aaaa\\a"')
-  echo cmd
-  call system(cmd)
-  "silent execute '!echo -ne "\e]1;aaaa\a"'
-endfunction
-
 "#### Directory Utility
 function! s:prj_has(fname) abort
   let prj_root = s:prelude.path2project_directory(expand('%'))
@@ -222,14 +214,6 @@ function! s:aftervspcommand()
   winc l
 endfunction
 call unite#custom#action('openable', 'vsptabopen', s:vsptabopen)
-
-"#### TSD install snipet
-function! s:tsd_install(...)
-  let search_words = map(range(1, a:{0}), 'a:{v:val}')
-  echo search_words
-  let res = system('tsd install '.join(search_words).' -rs')
-  echo res
-endfunction
 
 "#### QuickRun
 let g:quickrun_config = {}
@@ -291,6 +275,7 @@ function! s:go_go_back()
   execute 'edit +call\ cursor('.position.line.','.position.col.') '.position.filename
 endfunction
 
+"#### Syntastic Buffer Configure
 let s:syntastic_config = {}
 
 function! s:syntastic_config.typescript() abort dict
@@ -322,7 +307,6 @@ endfunction
 "### Original Commands {{{
 command! -nargs=1 PrjHas :echo s:prj_has(<q-args>)[1]
 command! -nargs=? -complete=dir -bang ChangeCurrent  call s:change_current('<args>', '<bang>') 
-command! -nargs=+ TsdInstall :call s:tsd_install(<q-args>)
 command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch : call s:quickrun_switch(<f-args>)
 command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
 command! GoGoBack : call s:go_go_back()
