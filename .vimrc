@@ -32,6 +32,7 @@ set foldmethod=marker
 set clipboard=unnamed
 set t_Co=256
 set guifont=Ricty\ Regular\ for\ Powerline:h14
+set spelllang=en,cjk
 
 "#### Only windows.
 if ostype=="win"
@@ -336,6 +337,14 @@ augroup file_encoding
   if ostype=="win"
     autocmd BufNewFile *.txt  setlocal fenc=shift-jis
   endif
+augroup END
+
+augroup fugitive
+  autocmd FileType gitcommit setlocal spell
+augroup END
+
+augroup markdown
+  autocmd FileType markdown setlocal spell
 augroup END
 
 augroup json_schema
