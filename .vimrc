@@ -150,6 +150,9 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 "#### Twitter
 NeoBundle 'TwitVim'
 
+"#### GraphQL
+NeoBundle 'jparise/vim-graphql'
+
 "#### for Nyaovim
 NeoBundle 'rhysd/nyaovim-running-gopher'
 
@@ -321,6 +324,7 @@ augroup vimrc_detect_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.md     set filetype=markdown
   autocmd BufNewFile,BufRead *.json   set filetype=json
+  autocmd BufNewFile,BufRead .babelrc set filetype=json
   autocmd BufNewFile,BufRead *.ts     set filetype=typescript
   autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
   autocmd BufNewFile,BufRead *.es5    set filetype=javascript
@@ -329,6 +333,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.go     set filetype=go
   autocmd BufNewFile,BufRead *.ru     set filetype=ruby
   autocmd BufNewFile,BufRead *.gradle set filetype=groovy
+  autocmd BufNewFile,BufRead *.graphql set filetype=graphql
 augroup END
 
 augroup file_encoding
