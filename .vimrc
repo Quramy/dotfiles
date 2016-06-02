@@ -74,9 +74,6 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
 
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'airblade/vim-gitgutter'
-
 "#### Theme
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
@@ -100,7 +97,12 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'editorconfig/editorconfig-vim'
+
+"#### Git, Github
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'junegunn/vim-emoji'
+NeoBundle 'rhysd/github-complete.vim'
 
 "#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
@@ -348,6 +350,7 @@ augroup file_encoding
 augroup END
 
 augroup fugitive
+  autocmd FileType gitcommit setlocal omnifunc=github_complete#complete
   autocmd FileType gitcommit setlocal spell
 augroup END
 
