@@ -33,6 +33,7 @@ set clipboard=unnamed
 set t_Co=256
 set guifont=Ricty\ Regular\ for\ Powerline:h14
 set spelllang=en,cjk
+set laststatus=2
 
 "#### Only windows.
 if ostype=="win"
@@ -99,6 +100,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'junegunn/vim-emoji'
 
 "#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
@@ -110,6 +112,7 @@ NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
 NeoBundle 'Quramy/vison'
 NeoBundle 'Quramy/vim-js-pretty-template'
+NeoBundle 'Quramy/syntastic-node-daemon'
 
 "#### TypeScript
 NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
