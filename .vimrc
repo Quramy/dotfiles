@@ -418,6 +418,11 @@ let g:airline_symbols.linenr = '⭡'
 let g:airline#extensions#tabline#left_sep = '⮀'
 let g:airline#extensions#tabline#left_alt_sep = '⮀'
 
+"#### github_complete
+if exists('$GITHUB_ACCESS_TOKEN')
+  let g:github_complete_github_api_token=$GITHUB_ACCESS_TOKEN
+endif
+
 "#### Syntastic checker
 let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
