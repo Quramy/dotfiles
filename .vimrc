@@ -113,6 +113,7 @@ NeoBundle 'isRuslan/vim-es6'
 NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
 NeoBundle 'Quramy/vison'
+NeoBundle 'Quramy/vim-json-schema-nav'
 NeoBundle 'Quramy/vim-js-pretty-template'
 NeoBundle 'Quramy/syntastic-node-daemon'
 
