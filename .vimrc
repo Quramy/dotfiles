@@ -116,6 +116,7 @@ NeoBundle 'Quramy/vison'
 NeoBundle 'Quramy/vim-json-schema-nav'
 NeoBundle 'Quramy/vim-js-pretty-template'
 NeoBundle 'Quramy/syntastic-node-daemon'
+NeoBundle 'facebook/vim-flow'
 
 "#### TypeScript
 NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
@@ -297,13 +298,22 @@ function! s:syntastic_config.typescript() abort dict
 endfunction
 
 function! s:syntastic_config.javascript() abort dict
+  let ret = []
   if s:prj_has('.eslintrc')[0] || s:prj_has('.eslintrc.js')[0] || s:prj_has('.eslintrc.yml')[0]
     let [has, eslint_path] = s:prj_has('node_modules/.bin/eslint')
     if has
       let b:syntastic_javascript_eslint_exec = eslint_path
     endif
-    return ['eslint']
+    call add(ret, 'eslint')
   endif
+  if s:prj_has('.flowconfig')[0]
+    let [has, flow_path] = s:prj_has('node_modules/.bin/flow')
+    if has
+      let b:syntastic_javascript_flow_exec = flow_path
+    endif
+    call add(ret, 'flow')
+  endif
+  return ret
 endfunction
 
 function! s:syntastic_buffer_configure()
@@ -425,6 +435,7 @@ if exists('$GITHUB_ACCESS_TOKEN')
 endif
 
 "#### Syntastic checker
+let g:flow#enable = 0
 let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
 
