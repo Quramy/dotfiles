@@ -151,6 +151,8 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 " 			\    'unix': 'ruby etc/config.rb > ~/.rsense',
 " 			\ } }
 
+NeoBundle 'vim-scripts/groovyindent'
+
 "#### fonts
 "NeoBundle 'ryanoasis/vim-devicons'
 
@@ -291,7 +293,7 @@ let s:syntastic_config = {}
 
 function! s:syntastic_config.typescript() abort dict
   if s:prj_has('tslint.json')[0]
-    return ['tsuquyomi', 'tslint']
+    return ['tsuquyomi', 'tslintd']
   else
     return ['tsuquyomi']
   endif
