@@ -127,6 +127,9 @@ NeoBundle 'Quramy/vim-dtsm'
 "#### CoffeeScript
 NeoBundle 'kchmck/vim-coffee-script'
 
+"#### dart
+NeoBundle 'dart-lang/dart-vim-plugin'
+
 "#### Golang
 NeoBundle 'fatih/vim-go'
 NeoBundle 'dgryski/vim-godef'
@@ -150,8 +153,6 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 " 			\    'mac': 'ruby etc/config.rb > ~/.rsense',
 " 			\    'unix': 'ruby etc/config.rb > ~/.rsense',
 " 			\ } }
-
-NeoBundle 'vim-scripts/groovyindent'
 
 "#### fonts
 "NeoBundle 'ryanoasis/vim-devicons'
@@ -352,6 +353,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.ru     set filetype=ruby
   autocmd BufNewFile,BufRead *.gradle set filetype=groovy
   autocmd BufNewFile,BufRead *.graphql set filetype=graphql
+  autocmd BufNewFile,BufRead *.dart set filetype=dart
 augroup END
 
 augroup file_encoding
@@ -391,8 +393,8 @@ augroup END
 augroup typescript
   autocmd FileType typescript SyntasticBufferConfigure
   autocmd FileType typescript setlocal completeopt=menu
-  autocmd FileType typescript setlocal tabstop=4
-  autocmd FileType typescript setlocal shiftwidth=4
+  autocmd FileType typescript setlocal tabstop=2
+  autocmd FileType typescript setlocal shiftwidth=2
   autocmd FileType typescript setlocal foldmethod=syntax
   autocmd FileType typescript JsPreTmpl html
   autocmd FileType typescript syn clear foldBraces

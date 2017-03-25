@@ -45,3 +45,5 @@ alias ll="ls -la"
 ## aliases }}}
 
 [ -f "$HOME"/.zshrc.local ] && source $HOME/.zshrc.local
+
+export PATH="$HOME/.yarn/bin:$PATH"
