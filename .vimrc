@@ -319,6 +319,14 @@ function! s:syntastic_config.javascript() abort dict
   return ret
 endfunction
 
+function! s:syntastic_config.css() abort dict
+  if s:prj_has('.stylelintrc')[0]
+    return ['stylelintd']
+  else
+    return []
+  endif
+endfunction
+
 function! s:syntastic_buffer_configure()
   if has_key(s:syntastic_config, &filetype)
     let b:syntastic_checkers = s:syntastic_config[&filetype]()
@@ -404,6 +412,10 @@ augroup END
 augroup golang
   autocmd FileType go :highlight goErr cterm=bold ctermfg=214
   autocmd FileType go :match goErr /\<err\>/
+augroup END
+
+augroup css
+  autocmd FileType css SyntasticBufferConfigure
 augroup END
 
 augroup keyward_hyphen
