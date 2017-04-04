@@ -124,6 +124,9 @@ NeoBundle 'Quramy/tsuquyomi'
 NeoBundle 'Quramy/vim-dtsm'
 "NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
+"#### Vue.js
+NeoBundle 'posva/vim-vue'
+
 "#### CoffeeScript
 NeoBundle 'kchmck/vim-coffee-script'
 
@@ -349,19 +352,20 @@ command! SyntasticBufferConfigure : call s:syntastic_buffer_configure()
 
 augroup vimrc_detect_filetype
   autocmd!
-  autocmd BufNewFile,BufRead *.md     set filetype=markdown
-  autocmd BufNewFile,BufRead *.json   set filetype=json
-  autocmd BufNewFile,BufRead .babelrc set filetype=json
-  autocmd BufNewFile,BufRead *.ts     set filetype=typescript
-  autocmd BufNewFile,BufRead *.tsx    set filetype=typescript
-  autocmd BufNewFile,BufRead *.es5    set filetype=javascript
-  autocmd BufNewFile,BufRead *.es6    set filetype=javascript
-  autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-  autocmd BufNewFile,BufRead *.go     set filetype=go
-  autocmd BufNewFile,BufRead *.ru     set filetype=ruby
-  autocmd BufNewFile,BufRead *.gradle set filetype=groovy
-  autocmd BufNewFile,BufRead *.graphql set filetype=graphql
-  autocmd BufNewFile,BufRead *.dart set filetype=dart
+  autocmd BufNewFile,BufRead *.md       set filetype=markdown
+  autocmd BufNewFile,BufRead *.json     set filetype=json
+  autocmd BufNewFile,BufRead .babelrc   set filetype=json
+  autocmd BufNewFile,BufRead *.ts       set filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx      set filetype=typescript
+  autocmd BufNewFile,BufRead *.es5      set filetype=javascript
+  autocmd BufNewFile,BufRead *.es6      set filetype=javascript
+  autocmd BufNewFile,BufRead *.coffee   set filetype=coffee
+  autocmd BufNewFile,BufRead *.go       set filetype=go
+  autocmd BufNewFile,BufRead *.ru       set filetype=ruby
+  autocmd BufNewFile,BufRead *.gradle   set filetype=groovy
+  autocmd BufNewFile,BufRead *.graphql  set filetype=graphql
+  autocmd BufNewFile,BufRead *.dart     set filetype=dart
+  autocmd BufNewFile,BufRead *.vue      set filetype=vue
 augroup END
 
 augroup file_encoding
