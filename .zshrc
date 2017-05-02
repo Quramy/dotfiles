@@ -47,3 +47,4 @@ alias ll="ls -la"
 [ -f "$HOME"/.zshrc.local ] && source $HOME/.zshrc.local
 
 export PATH="$HOME/.yarn/bin:$PATH"
+function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
