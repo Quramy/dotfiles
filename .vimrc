@@ -126,6 +126,7 @@ NeoBundle 'Quramy/vim-dtsm'
 
 "#### Vue.js
 NeoBundle 'posva/vim-vue'
+NeoBundle 'Quramy/tsuquyomi-vue'
 
 "#### CoffeeScript
 NeoBundle 'kchmck/vim-coffee-script'
@@ -502,9 +503,12 @@ nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
 
 "#### TypeScript
 augroup typescript_key_mapping
-  autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
-  autocmd FileType typescript nmap <buffer> <Leader>E <Plug>(TsuquyomiRenameSymbolC)
+  autocmd FileType typescript nmap <buffer> <Leader>e  <Plug>(TsuquyomiRenameSymbol)
+  autocmd FileType typescript nmap <buffer> <Leader>E  <Plug>(TsuquyomiRenameSymbolC)
+  autocmd FileType typescript nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
+  autocmd FileType typescript nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
   autocmd FileType typescript nmap <buffer> <Leader>t :<C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript nmap <buffer> <Leader>r :<C-u>echo tsuquyomi#hint()<CR>
 augroup END
 
 "#### GoLang
