@@ -337,6 +337,43 @@ function! s:syntastic_buffer_configure()
   endif
 endfunction
 
+"#### Highlight
+"
+function! s:get_visual_selection()
+  " Why is this not a built-in Vim script function?!
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+endfunction
+
+function! s:highlight_copy_with_file(fname)
+  let font_size = 20
+  let font = 'monako'
+  let out_format = 'rtf'
+  let style = 'rootwater'
+  let options = [
+        \'--out-format', out_format,
+        \'--font', font,
+        \'--font-size', font_size,
+        \'--style', style
+        \]
+  let rtf = system('highlight '.join(options, ' ').' '.a:fname.' | pbcopy')
+endfunction
+
+function! s:highlight_copy_current_buffer()
+  call s:highlight_copy_with_file(expand('%:p'))
+endfunction
+
+function! s:highlight_copy_visual_selection()
+  let fname = tempname().expand('%')
+  let selection = s:get_visual_selection()
+  call writefile(split(selection, '\n'), fname)
+  call s:highlight_copy_with_file(fname)
+endfunction
+
 "}}} end Custom Functions
 
 "### Original Commands {{{
@@ -346,6 +383,8 @@ command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch
 command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
 command! GoGoBack : call s:go_go_back()
 command! SyntasticBufferConfigure : call s:syntastic_buffer_configure()
+command! HighlightCopyBuf : call s:highlight_copy_current_buffer()
+command! HighlightVis : call s:highlight_copy_visual_selection()
 "}}} end Original Commands
 
 "### Auto Command {{{
@@ -497,6 +536,10 @@ nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=4
 augroup vimfiler_key_mapping
   autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
 augroup END
+
+"#### highlighting
+nnoremap <silent> <Leader>hh :<C-u>HighlightCopyBuf<CR>
+vnoremap <silent> <Leader>hh :<C-u>HighlightVis<CR>
 
 "#### Change Current Directory to Buffer's dir.
 nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
