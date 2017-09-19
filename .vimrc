@@ -8,6 +8,9 @@ endif
 
 "### Basic Settings{{{
 set encoding=utf-8
+set exrc
+set secure
+set noswapfile
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 set fileformats=unix,dos,mac
 set nocompatible
@@ -97,6 +100,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'prabirshrestha/asyncomplete.vim'
 
 "#### Git, Github
 NeoBundle 'tpope/vim-fugitive'
@@ -167,8 +171,15 @@ NeoBundle 'TwitVim'
 "#### GraphQL
 NeoBundle 'jparise/vim-graphql'
 
+"#### Bazel
+NeoBundle 'google/vim-maktaba'
+NeoBundle 'bazelbuild/vim-ft-bzl'
+NeoBundle 'bazelbuild/vim-bazel'
+
 "#### for Nyaovim
 NeoBundle 'rhysd/nyaovim-running-gopher'
+
+NeoBundle 'johngrib/vim-game-code-break'
 
 "#### developing
 
@@ -316,9 +327,12 @@ function! s:syntastic_config.javascript() abort dict
   if s:prj_has('.flowconfig')[0]
     let [has, flow_path] = s:prj_has('node_modules/.bin/flow')
     if has
-      let b:syntastic_javascript_flow_exec = flow_path
+      let g:flow#enable = 1
+      " let b:syntastic_javascript_flow_exec = flow_path
+    else
+      let g:flow#enable = 0
     endif
-    call add(ret, 'flow')
+    " call add(ret, 'flow')
   endif
   return ret
 endfunction
@@ -368,10 +382,14 @@ function! s:highlight_copy_current_buffer()
 endfunction
 
 function! s:highlight_copy_visual_selection()
-  let fname = tempname().expand('%')
+  let fname = tempname().expand('%:t')
   let selection = s:get_visual_selection()
   call writefile(split(selection, '\n'), fname)
   call s:highlight_copy_with_file(fname)
+endfunction
+
+
+function! s:configure_tsuquyomi_formatopt() abort
 endfunction
 
 "}}} end Custom Functions
@@ -392,20 +410,22 @@ command! HighlightVis : call s:highlight_copy_visual_selection()
 
 augroup vimrc_detect_filetype
   autocmd!
-  autocmd BufNewFile,BufRead *.md       set filetype=markdown
-  autocmd BufNewFile,BufRead *.json     set filetype=json
-  autocmd BufNewFile,BufRead .babelrc   set filetype=json
-  autocmd BufNewFile,BufRead *.ts       set filetype=typescript
-  autocmd BufNewFile,BufRead *.tsx      set filetype=typescript
-  autocmd BufNewFile,BufRead *.es5      set filetype=javascript
-  autocmd BufNewFile,BufRead *.es6      set filetype=javascript
-  autocmd BufNewFile,BufRead *.coffee   set filetype=coffee
-  autocmd BufNewFile,BufRead *.go       set filetype=go
-  autocmd BufNewFile,BufRead *.ru       set filetype=ruby
-  autocmd BufNewFile,BufRead *.gradle   set filetype=groovy
-  autocmd BufNewFile,BufRead *.graphql  set filetype=graphql
-  autocmd BufNewFile,BufRead *.dart     set filetype=dart
-  autocmd BufNewFile,BufRead *.vue      set filetype=vue
+  autocmd BufNewFile,BufRead *.md         set filetype=markdown
+  autocmd BufNewFile,BufRead *.json       set filetype=json
+  autocmd BufNewFile,BufRead .babelrc     set filetype=json
+  autocmd BufNewFile,BufRead *.ts         set filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx        set filetype=typescript
+  autocmd BufNewFile,BufRead *.es5        set filetype=javascript
+  autocmd BufNewFile,BufRead *.es6        set filetype=javascript
+  autocmd BufNewFile,BufRead *.coffee     set filetype=coffee
+  autocmd BufNewFile,BufRead *.go         set filetype=go
+  autocmd BufNewFile,BufRead *.ru         set filetype=ruby
+  autocmd BufNewFile,BufRead *.gradle     set filetype=groovy
+  autocmd BufNewFile,BufRead *.graphql    set filetype=graphql
+  autocmd BufNewFile,BufRead *.graphcool  set filetype=graphql
+  autocmd BufNewFile,BufRead *.dart       set filetype=dart
+  autocmd BufNewFile,BufRead *.vue        set filetype=vue
+  autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE setfiletype bzl
 augroup END
 
 augroup file_encoding
@@ -511,6 +531,9 @@ let twitvim_browser_cmd = 'open'
 let twitvim_enable_python = 1
 let twitvim_count = 40
 
+"#### JsPreTmpl
+" call jspretmpl#register_tag('gql', 'graphql')
+
 "}}} end Plugin Settings
 
 "### Key Mappings {{{
@@ -554,11 +577,34 @@ augroup typescript_key_mapping
   autocmd FileType typescript nmap <buffer> <Leader>r :<C-u>echo tsuquyomi#hint()<CR>
 augroup END
 
+"#### JavaScript
+augroup flow_key_mapping
+  autocmd FileType javascript nmap <buffer> <silent> <C-]> :<C-u>FlowJumpToDef<CR>
+  autocmd FileType javascript nmap <buffer> <Leader>t :<C-u>FlowType<CR>
+augroup END
+
 "#### GoLang
 augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
   autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
 augroup END
 
+" function s:ts_comp(opt, ctx)
+"   call tsuquyomi#getCompletions({candidates, startcol ->
+"          \ asyncomplete#complete('typesctipt', a:ctx, startcol, candidates)
+"          \ })
+" 
+" endfunction
+" 
+" call asyncomplete#register_source({
+"     \ 'name': 'tsuquyomi',
+"     \ 'whitelist': ['typescript'],
+"     \ 'priority': 5,
+"     \ 'completor': function('s:ts_comp'),
+"     \ })
+
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 "}}} end Key Mappings 
