@@ -540,6 +540,9 @@ let twitvim_browser_cmd = 'open'
 let twitvim_enable_python = 1
 let twitvim_count = 40
 
+"#### vim-clang
+let g:clang_auto=0
+
 "#### JsPreTmpl
 " call jspretmpl#register_tag('gql', 'graphql')
 
