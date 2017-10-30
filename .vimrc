@@ -108,6 +108,9 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'junegunn/vim-emoji'
 NeoBundle 'rhysd/github-complete.vim'
 
+"#### C/C++
+NeoBundle 'justmao945/vim-clang'
+
 "#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
 NeoBundle 'HTML5-Syntax-File'
@@ -425,7 +428,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.graphcool  set filetype=graphql
   autocmd BufNewFile,BufRead *.dart       set filetype=dart
   autocmd BufNewFile,BufRead *.vue        set filetype=vue
-  autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE setfiletype bzl
+  autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE,*.sky setfiletype bzl
 augroup END
 
 augroup file_encoding
@@ -434,6 +437,10 @@ augroup file_encoding
   if ostype=="win"
     autocmd BufNewFile *.txt  setlocal fenc=shift-jis
   endif
+augroup END
+
+augroup clang
+  autocmd FileType cpp setlocal completeopt-=preview
 augroup END
 
 augroup fugitive
@@ -515,6 +522,8 @@ if exists('$GITHUB_ACCESS_TOKEN')
 endif
 
 "#### Syntastic checker
+let g:syntastic_c_include_dirs = []
+
 let g:flow#enable = 0
 let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
