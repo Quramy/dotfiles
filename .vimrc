@@ -102,6 +102,9 @@ NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'prabirshrestha/asyncomplete.vim'
 
+NeoBundle 'natebosch/vim-lsc'
+"NeoBundle 'autozimu/LanguageClient-neovim'
+
 "#### Git, Github
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
@@ -522,7 +525,7 @@ if exists('$GITHUB_ACCESS_TOKEN')
 endif
 
 "#### Syntastic checker
-let g:syntastic_c_include_dirs = []
+let g:syntastic_cpp_include_dirs = []
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
@@ -545,6 +548,16 @@ let twitvim_count = 40
 "#### vim-clang
 let g:clang_auto=0
 let g:clang_cpp_options = g:syntastic_cpp_compiler_options
+
+"#### vim-lsc
+" let g:lsc_server_commands = {
+"       \ 'cpp': '/Users/yosuke/workspaces/svn/llvm/build/bin/clangd',
+"       \ 'dart': 'dart_language_server',
+"       \ }
+"
+let g:lsc_server_commands = {
+      \ 'dart': 'dart_language_server',
+      \ }
 
 "#### JsPreTmpl
 " call jspretmpl#register_tag('gql', 'graphql')
