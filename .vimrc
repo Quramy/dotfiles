@@ -100,7 +100,9 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'prabirshrestha/async.vim'
 NeoBundle 'prabirshrestha/asyncomplete.vim'
+NeoBundle 'prabirshrestha/vim-lsp'
 
 NeoBundle 'natebosch/vim-lsc'
 "NeoBundle 'autozimu/LanguageClient-neovim'
@@ -112,7 +114,7 @@ NeoBundle 'junegunn/vim-emoji'
 NeoBundle 'rhysd/github-complete.vim'
 
 "#### C/C++
-NeoBundle 'justmao945/vim-clang'
+" NeoBundle 'justmao945/vim-clang'
 
 "#### HTML
 NeoBundle 'vim-scripts/Emmet.vim'
@@ -132,7 +134,6 @@ NeoBundle 'facebook/vim-flow'
 NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
 NeoBundle 'Quramy/vim-dtsm'
-"NeoBundle 'https://github.com/clausreinke/typescript-tools.git'
 
 "#### Vue.js
 NeoBundle 'posva/vim-vue'
@@ -444,6 +445,7 @@ augroup END
 
 augroup clang
   autocmd FileType cpp setlocal completeopt-=preview
+  autocmd FileType cpp setlocal omnifunc=lsp#complete
 augroup END
 
 augroup fugitive
@@ -549,15 +551,32 @@ let twitvim_count = 40
 let g:clang_auto=0
 let g:clang_cpp_options = g:syntastic_cpp_compiler_options
 
+"#### vim-lsp
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+if executable('clangd-mp-devel')
+  call lsp#register_server({
+      \ 'name': 'clangd-mp-devel',
+      \ 'cmd': {server_info->['clangd-mp-devel']},
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+      \ })
+elseif executable('clangd')
+  call lsp#register_server({
+      \ 'name': 'clangd',
+      \ 'cmd': {server_info->['clangd']},
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+      \ })
+endif
+
 "#### vim-lsc
 " let g:lsc_server_commands = {
-"       \ 'cpp': '/Users/yosuke/workspaces/svn/llvm/build/bin/clangd',
+"       \ 'cpp': '/opt/local/bin/clangd-mp-devel',
 "       \ 'dart': 'dart_language_server',
 "       \ }
-"
-let g:lsc_server_commands = {
-      \ 'dart': 'dart_language_server',
-      \ }
+
+" let g:lsc_server_commands = {
+"       \ 'dart': 'dart_language_server',
+"       \ }
 
 "#### JsPreTmpl
 " call jspretmpl#register_tag('gql', 'graphql')
@@ -594,6 +613,11 @@ vnoremap <silent> <Leader>hh :<C-u>HighlightVis<CR>
 
 "#### Change Current Directory to Buffer's dir.
 nnoremap <silent> <Space>cd :<C-u>ChangeCurrent<CR>
+
+"#### clang
+augroup clang_key_mapping
+  autocmd FileType cpp nmap <buffer> <C-]> :LspDefinition <CR>
+augroup END
 
 "#### TypeScript
 augroup typescript_key_mapping
