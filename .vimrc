@@ -96,6 +96,7 @@ NeoBundleLazy 'Shougo/neosnippet', {
 			\   'insert' : 1,
 			\ }}
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'luochen1990/rainbow'
 
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
@@ -117,7 +118,7 @@ NeoBundle 'rhysd/github-complete.vim'
 " NeoBundle 'justmao945/vim-clang'
 
 "#### HTML
-NeoBundle 'vim-scripts/Emmet.vim'
+NeoBundle 'mattn/emmet-vim'
 NeoBundle 'HTML5-Syntax-File'
 
 "#### JavaScript/JSON
@@ -157,6 +158,7 @@ NeoBundle 'cakebaker/scss-syntax.vim'
 
 "#### Vim script
 NeoBundle 'vim-jp/vital.vim'
+NeoBundle 'machakann/vim-vimhelplint'
 
 "#### Ruby
 NeoBundle 'Shougo/neocomplcache-rsense', {
@@ -331,16 +333,16 @@ function! s:syntastic_config.javascript() abort dict
     endif
     call add(ret, 'eslint')
   endif
-  if s:prj_has('.flowconfig')[0]
-    let [has, flow_path] = s:prj_has('node_modules/.bin/flow')
-    if has
-      let g:flow#enable = 1
-      " let b:syntastic_javascript_flow_exec = flow_path
-    else
-      let g:flow#enable = 0
-    endif
-    " call add(ret, 'flow')
-  endif
+  " if s:prj_has('.flowconfig')[0]
+  "   let [has, flow_path] = s:prj_has('node_modules/.bin/flow')
+  "   if has
+  "     let g:flow#enable = 1
+  "     " let b:syntastic_javascript_flow_exec = flow_path
+  "   else
+  "     let g:flow#enable = 0
+  "   endif
+  "   " call add(ret, 'flow')
+  " endif
   return ret
 endfunction
 
@@ -422,6 +424,8 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead .babelrc     set filetype=json
   autocmd BufNewFile,BufRead *.ts         set filetype=typescript
   autocmd BufNewFile,BufRead *.tsx        set filetype=typescript
+  autocmd BufNewFile,BufRead *.mjs        set filetype=javascript
+  autocmd BufNewFile,BufRead *.jsx        set filetype=javascript
   autocmd BufNewFile,BufRead *.es5        set filetype=javascript
   autocmd BufNewFile,BufRead *.es6        set filetype=javascript
   autocmd BufNewFile,BufRead *.coffee     set filetype=coffee
@@ -468,6 +472,7 @@ augroup javascript
   autocmd FileType javascript SyntasticBufferConfigure
   "au FileType javascript call JavaScriptFold()
   au FileType javascript JsPreTmpl html
+  au FileType javascript setlocal omnifunc=lsp#complete
 augroup END
 
 augroup coffee
@@ -560,13 +565,24 @@ if executable('clangd-mp-devel')
       \ 'cmd': {server_info->['clangd-mp-devel']},
       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
       \ })
-elseif executable('clangd')
+endif
+if executable('clangd')
   call lsp#register_server({
       \ 'name': 'clangd',
       \ 'cmd': {server_info->['clangd']},
       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
       \ })
 endif
+if executable('flow-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'flow-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'flow-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+        \ 'whitelist': ['javascript'],
+        \ })
+endif
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 
 "#### vim-lsc
 " let g:lsc_server_commands = {
@@ -631,7 +647,8 @@ augroup END
 
 "#### JavaScript
 augroup flow_key_mapping
-  autocmd FileType javascript nmap <buffer> <silent> <C-]> :<C-u>FlowJumpToDef<CR>
+  " autocmd FileType javascript nmap <buffer> <silent> <C-]> :<C-u>FlowJumpToDef<CR>
+  autocmd FileType javascript nmap <buffer> <C-]> :LspDefinition <CR>
   autocmd FileType javascript nmap <buffer> <Leader>t :<C-u>FlowType<CR>
 augroup END
 
