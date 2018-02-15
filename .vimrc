@@ -95,7 +95,10 @@ NeoBundleLazy 'Shougo/neosnippet', {
 			\ 'autoload' : {
 			\   'insert' : 1,
 			\ }}
+
+let g:ale_emit_conflict_warnings = 0 " TODO
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'w0rp/ale'
 NeoBundle 'luochen1990/rainbow'
 
 NeoBundle 'ekalinin/Dockerfile.vim'
@@ -104,9 +107,6 @@ NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'prabirshrestha/async.vim'
 NeoBundle 'prabirshrestha/asyncomplete.vim'
 NeoBundle 'prabirshrestha/vim-lsp'
-
-NeoBundle 'natebosch/vim-lsc'
-"NeoBundle 'autozimu/LanguageClient-neovim'
 
 "#### Git, Github
 NeoBundle 'tpope/vim-fugitive'
@@ -129,10 +129,10 @@ NeoBundle 'Quramy/vison'
 NeoBundle 'Quramy/vim-json-schema-nav'
 NeoBundle 'Quramy/vim-js-pretty-template'
 NeoBundle 'Quramy/syntastic-node-daemon'
-NeoBundle 'facebook/vim-flow'
+"NeoBundle 'facebook/vim-flow'
 
 "#### TypeScript
-NeoBundle 'leafgarland/typescript-vim' "NeoBundle 'Quramy/typescript-vim'
+NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'Quramy/tsuquyomi'
 NeoBundle 'Quramy/vim-dtsm'
 
@@ -326,13 +326,13 @@ endfunction
 
 function! s:syntastic_config.javascript() abort dict
   let ret = []
-  if s:prj_has('.eslintrc')[0] || s:prj_has('.eslintrc.js')[0] || s:prj_has('.eslintrc.yml')[0]
-    let [has, eslint_path] = s:prj_has('node_modules/.bin/eslint')
-    if has
-      let b:syntastic_javascript_eslint_exec = eslint_path
-    endif
-    call add(ret, 'eslint')
-  endif
+  " if s:prj_has('.eslintrc')[0] || s:prj_has('.eslintrc.js')[0] || s:prj_has('.eslintrc.yml')[0]
+  "   let [has, eslint_path] = s:prj_has('node_modules/.bin/eslint')
+  "   if has
+  "     let b:syntastic_javascript_eslint_exec = eslint_path
+  "   endif
+  "   call add(ret, 'eslint')
+  " endif
   " if s:prj_has('.flowconfig')[0]
   "   let [has, flow_path] = s:prj_has('node_modules/.bin/flow')
   "   if has
@@ -357,6 +357,28 @@ endfunction
 function! s:syntastic_buffer_configure()
   if has_key(s:syntastic_config, &filetype)
     let b:syntastic_checkers = s:syntastic_config[&filetype]()
+  endif
+endfunction
+
+"#### ALE
+let s:ale_config = {}
+
+function! s:ale_config.javascript() abort dict
+  let ret = []
+  if s:prj_has('.eslintrc')[0] || s:prj_has('.eslintrc.js')[0] || s:prj_has('.eslintrc.yml')[0]
+    let [has, eslint_path] = s:prj_has('node_modules/.bin/eslint')
+    if has
+      let b:syntastic_javascript_eslint_exec = eslint_path
+    endif
+    call add(ret, 'eslint')
+  endif
+  return ret
+endfunction
+
+function! s:ale_buffer_configure()
+  if has_key(s:ale_config, &filetype)
+    let b:ale_linters = { }
+    let b:ale_linters[&filetype] = s:ale_config[&filetype]()
   endif
 endfunction
 
@@ -410,6 +432,7 @@ command! -nargs=? -complete=customlist,s:quickrun_switch_complete QuickRunSwitch
 command! -nargs=* GoGoDef : call s:go_go_def(<f-args>)
 command! GoGoBack : call s:go_go_back()
 command! SyntasticBufferConfigure : call s:syntastic_buffer_configure()
+command! AleBufferConfigure : call s:ale_buffer_configure()
 command! HighlightCopyBuf : call s:highlight_copy_current_buffer()
 command! HighlightVis : call s:highlight_copy_visual_selection()
 "}}} end Original Commands
@@ -470,6 +493,7 @@ augroup END
 
 augroup javascript
   autocmd FileType javascript SyntasticBufferConfigure
+  autocmd FileType javascript AleBufferConfigure
   "au FileType javascript call JavaScriptFold()
   au FileType javascript JsPreTmpl html
   au FileType javascript setlocal omnifunc=lsp#complete
@@ -540,6 +564,10 @@ let g:flow#enable = 0
 let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
 
+"#### ALE
+let g:ale_linters = {
+      \ }
+
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
       \ "typescript": {
@@ -551,10 +579,6 @@ let g:markdown_quate_syntax_filetypes = {
 let twitvim_browser_cmd = 'open'
 let twitvim_enable_python = 1
 let twitvim_count = 40
-
-"#### vim-clang
-let g:clang_auto=0
-let g:clang_cpp_options = g:syntastic_cpp_compiler_options
 
 "#### vim-lsp
 let g:lsp_log_verbose = 1
@@ -583,16 +607,6 @@ if executable('flow-language-server')
 endif
 let g:lsp_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-
-"#### vim-lsc
-" let g:lsc_server_commands = {
-"       \ 'cpp': '/opt/local/bin/clangd-mp-devel',
-"       \ 'dart': 'dart_language_server',
-"       \ }
-
-" let g:lsc_server_commands = {
-"       \ 'dart': 'dart_language_server',
-"       \ }
 
 "#### JsPreTmpl
 " call jspretmpl#register_tag('gql', 'graphql')
@@ -647,7 +661,6 @@ augroup END
 
 "#### JavaScript
 augroup flow_key_mapping
-  " autocmd FileType javascript nmap <buffer> <silent> <C-]> :<C-u>FlowJumpToDef<CR>
   autocmd FileType javascript nmap <buffer> <C-]> :LspDefinition <CR>
   autocmd FileType javascript nmap <buffer> <Leader>t :<C-u>FlowType<CR>
 augroup END
@@ -657,23 +670,5 @@ augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
   autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
 augroup END
-
-" function s:ts_comp(opt, ctx)
-"   call tsuquyomi#getCompletions({candidates, startcol ->
-"          \ asyncomplete#complete('typesctipt', a:ctx, startcol, candidates)
-"          \ })
-" 
-" endfunction
-" 
-" call asyncomplete#register_source({
-"     \ 'name': 'tsuquyomi',
-"     \ 'whitelist': ['typescript'],
-"     \ 'priority': 5,
-"     \ 'completor': function('s:ts_comp'),
-"     \ })
-
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 "}}} end Key Mappings 
