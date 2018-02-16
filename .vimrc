@@ -364,21 +364,26 @@ endfunction
 let s:ale_config = {}
 
 function! s:ale_config.javascript() abort dict
-  let ret = []
+  let linters = []
+  let fixers = []
   if s:prj_has('.eslintrc')[0] || s:prj_has('.eslintrc.js')[0] || s:prj_has('.eslintrc.yml')[0]
     let [has, eslint_path] = s:prj_has('node_modules/.bin/eslint')
     if has
       let b:syntastic_javascript_eslint_exec = eslint_path
     endif
-    call add(ret, 'eslint')
+    call add(linters, 'eslint')
+    call add(fixers, 'eslint')
   endif
-  return ret
+  return [linters, fixers]
 endfunction
 
 function! s:ale_buffer_configure()
   if has_key(s:ale_config, &filetype)
     let b:ale_linters = { }
-    let b:ale_linters[&filetype] = s:ale_config[&filetype]()
+    let b:ale_fixers = { }
+    let [linters, fixers] = s:ale_config[&filetype]()
+    let b:ale_linters[&filetype] = linters
+    let b:ale_fixers[&filetype] = fixers
   endif
 endfunction
 
@@ -565,8 +570,8 @@ let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 "#### ALE
-let g:ale_linters = {
-      \ }
+let g:ale_linters = { }
+let g:ale_fixers = { }
 
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
@@ -663,6 +668,7 @@ augroup END
 augroup flow_key_mapping
   autocmd FileType javascript nmap <buffer> <C-]> :LspDefinition <CR>
   autocmd FileType javascript nmap <buffer> <Leader>t :<C-u>FlowType<CR>
+  autocmd FileType typescript nmap <buffer> <Leader>qf :ALEFix <CR>
 augroup END
 
 "#### GoLang
