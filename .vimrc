@@ -639,7 +639,7 @@ nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=42 -no-quit -buffer-name=side<CR>
 augroup vimfiler_key_mapping
-  autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action('vsptabopen')<CR>
+  autocmd filetype vimfiler nnoremap <silent> <Leader>e : <C-u>call vimfiler#mappings#do_action(b:vimfiler, 'vsptabopen')<CR>
 augroup END
 
 "#### highlighting
