@@ -499,8 +499,8 @@ augroup END
 augroup javascript
   autocmd FileType javascript SyntasticBufferConfigure
   autocmd FileType javascript AleBufferConfigure
-  "au FileType javascript call JavaScriptFold()
-  au FileType javascript JsPreTmpl html
+  " au FileType javascript call JavaScriptFold()
+  " au FileType javascript JsPreTmpl html
   au FileType javascript setlocal omnifunc=lsp#complete
 augroup END
 
