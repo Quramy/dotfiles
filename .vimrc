@@ -98,7 +98,10 @@ NeoBundleLazy 'Shougo/neosnippet', {
 
 let g:ale_emit_conflict_warnings = 0 " TODO
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'w0rp/ale'
+NeoBundle 'w0rp/ale' , {
+      \ 'autoload': {
+      \   'filetypes': ['javascript'],
+      \  }}
 NeoBundle 'luochen1990/rainbow'
 
 NeoBundle 'ekalinin/Dockerfile.vim'
@@ -125,6 +128,7 @@ NeoBundle 'HTML5-Syntax-File'
 NeoBundle 'isRuslan/vim-es6'
 NeoBundle 'vim-json-bundle'
 NeoBundle 'jason0x43/vim-js-indent'
+NeoBundle 'galooshi/vim-import-js'
 NeoBundle 'Quramy/vison'
 NeoBundle 'Quramy/vim-json-schema-nav'
 NeoBundle 'Quramy/vim-js-pretty-template'
@@ -378,9 +382,9 @@ function! s:ale_config.javascript() abort dict
 endfunction
 
 function! s:ale_buffer_configure()
+  let b:ale_linters = { }
+  let b:ale_fixers = { }
   if has_key(s:ale_config, &filetype)
-    let b:ale_linters = { }
-    let b:ale_fixers = { }
     let [linters, fixers] = s:ale_config[&filetype]()
     let b:ale_linters[&filetype] = linters
     let b:ale_fixers[&filetype] = fixers
@@ -668,7 +672,7 @@ augroup END
 augroup flow_key_mapping
   autocmd FileType javascript nmap <buffer> <C-]> :LspDefinition <CR>
   autocmd FileType javascript nmap <buffer> <Leader>t :<C-u>FlowType<CR>
-  autocmd FileType typescript nmap <buffer> <Leader>qf :ALEFix <CR>
+  autocmd FileType javascript nmap <buffer> <Leader>qf :ALEFix <CR>
 augroup END
 
 "#### GoLang
