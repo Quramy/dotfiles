@@ -37,6 +37,7 @@ set t_Co=256
 set guifont=Ricty\ Regular\ for\ Powerline:h14
 set spelllang=en,cjk
 set laststatus=2
+set autoread
 
 "#### Only windows.
 if ostype=="win"
@@ -190,9 +191,8 @@ NeoBundle 'bazelbuild/vim-ft-bzl'
 NeoBundle 'bazelbuild/vim-bazel'
 
 "#### for Nyaovim
-NeoBundle 'rhysd/nyaovim-running-gopher'
-
-NeoBundle 'johngrib/vim-game-code-break'
+" NeoBundle 'rhysd/nyaovim-running-gopher'
+" NeoBundle 'johngrib/vim-game-code-break'
 
 "#### developing
 
