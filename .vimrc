@@ -185,6 +185,9 @@ NeoBundle 'TwitVim'
 "#### GraphQL
 NeoBundle 'jparise/vim-graphql'
 
+"#### Thrift
+NeoBundle 'solarnz/thrift.vim'
+
 "#### Bazel
 NeoBundle 'google/vim-maktaba'
 NeoBundle 'bazelbuild/vim-ft-bzl'
@@ -518,7 +521,7 @@ augroup typescript
   autocmd FileType typescript setlocal tabstop=2
   autocmd FileType typescript setlocal shiftwidth=2
   autocmd FileType typescript setlocal foldmethod=syntax
-  autocmd FileType typescript JsPreTmpl html
+  " autocmd FileType typescript JsPreTmpl html
   autocmd FileType typescript syn clear foldBraces
   "autocmd FileType typescript setlocal ballooneval
 augroup END
