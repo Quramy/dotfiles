@@ -111,6 +111,7 @@ NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'prabirshrestha/async.vim'
 NeoBundle 'prabirshrestha/asyncomplete.vim'
 NeoBundle 'prabirshrestha/vim-lsp'
+NeoBundle 'tpope/vim-abolish'
 
 "#### Git, Github
 NeoBundle 'tpope/vim-fugitive'
