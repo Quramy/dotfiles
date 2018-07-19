@@ -663,7 +663,7 @@ nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 
 "#### Terminal
 nnoremap <silent> <Leader>fa : <C-u>TermMini<CR>
-tnoremap <Esc> <C-W>N
+tnoremap <C-Z> <C-W>N
 set notimeout ttimeout timeoutlen=100
 
 "#### VimFiler
