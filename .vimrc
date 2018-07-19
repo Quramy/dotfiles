@@ -655,6 +655,10 @@ noremap gh : <C-u>tabprevious<CR>
 noremap gl : <C-u>tabnext<CR>
 noremap gq : <C-u>tabclose<CR>
 
+"#### Window util
+nnoremap <Leader>fw 15<C-w>+
+nnoremap <Leader>ffw 15<C-w>-
+
 "#### Unite
 nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
 nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
@@ -662,9 +666,8 @@ nnoremap <silent> [unite]p :<C-u>Unite<Space>-start-insert<Space>file_rec/git:.<
 nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 
 "#### Terminal
-nnoremap <silent> <Leader>fa : <C-u>TermMini<CR>
+nnoremap <silent> <Leader>fa : <C-u>TermMini<CR><C-W>x<C-W>j
 tnoremap <C-Z> <C-W>N
-set notimeout ttimeout timeoutlen=100
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=42 -no-quit -buffer-name=side<CR>
