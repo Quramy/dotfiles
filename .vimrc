@@ -186,6 +186,9 @@ NeoBundle 'TwitVim'
 "#### GraphQL
 NeoBundle 'jparise/vim-graphql'
 
+"#### TOML
+NeoBundle 'cespare/vim-toml'
+
 "#### Thrift
 NeoBundle 'solarnz/thrift.vim'
 
@@ -473,6 +476,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.thrift     set filetype=thrift
   autocmd BufNewFile,BufRead *.dart       set filetype=dart
   autocmd BufNewFile,BufRead *.vue        set filetype=vue
+  autocmd BufNewFile,BufRead *.toml       set filetype=toml
   autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE,*.sky setfiletype bzl
 augroup END
 
