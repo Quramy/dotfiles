@@ -50,10 +50,3 @@ alias git-delete-pruned-branch="git branch -r | awk '{print $1}' | egrep -v -f /
 export PATH="$HOME/.yarn/bin:$PATH"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/yosuke/workspaces/javascript/reg-suit/packages/reg-gh-app/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/yosuke/workspaces/javascript/reg-suit/packages/reg-gh-app/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/yosuke/workspaces/javascript/reg-suit/packages/reg-gh-app/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/yosuke/workspaces/javascript/reg-suit/packages/reg-gh-app/node_modules/tabtab/.completions/sls.zsh
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

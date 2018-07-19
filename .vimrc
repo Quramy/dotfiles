@@ -532,6 +532,10 @@ augroup golang
   autocmd FileType go :match goErr /\<err\>/
 augroup END
 
+augroup rust
+  autocmd FileType rust setlocal omnifunc=lsp#complete
+augroup END
+
 augroup css
   autocmd FileType css SyntasticBufferConfigure
 augroup END
@@ -611,11 +615,18 @@ if executable('clangd')
       \ })
 endif
 if executable('flow-language-server')
-    au User lsp_setup call lsp#register_server({
+  au User lsp_setup call lsp#register_server({
         \ 'name': 'flow-language-server',
         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'flow-language-server --stdio']},
         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
         \ 'whitelist': ['javascript'],
+        \ })
+endif
+if executable('rls')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rls']},
+        \ 'whitelist': ['rust'],
         \ })
 endif
 let g:lsp_signs_enabled = 1         " enable signs
@@ -683,6 +694,10 @@ augroup END
 augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
   autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
+augroup END
+
+augroup rust_key_mapping
+  autocmd FileType rust nmap <buffer> <C-]> :LspDefinition <CR>
 augroup END
 
 "}}} end Key Mappings 
