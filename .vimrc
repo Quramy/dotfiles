@@ -451,6 +451,7 @@ command! SyntasticBufferConfigure : call s:syntastic_buffer_configure()
 command! AleBufferConfigure : call s:ale_buffer_configure()
 command! HighlightCopyBuf : call s:highlight_copy_current_buffer()
 command! HighlightVis : call s:highlight_copy_visual_selection()
+command! TermMini : terminal ++rows=14
 "}}} end Original Commands
 
 "### Auto Command {{{
@@ -659,6 +660,11 @@ nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
 nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>
 nnoremap <silent> [unite]p :<C-u>Unite<Space>-start-insert<Space>file_rec/git:.<CR>
 nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
+
+"#### Terminal
+nnoremap <silent> <Leader>fa : <C-u>TermMini<CR>
+tnoremap <Esc> <C-W>N
+set notimeout ttimeout timeoutlen=100
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=42 -no-quit -buffer-name=side<CR>
