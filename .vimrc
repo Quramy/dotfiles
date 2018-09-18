@@ -201,6 +201,9 @@ NeoBundle 'bazelbuild/vim-bazel'
 " NeoBundle 'rhysd/nyaovim-running-gopher'
 " NeoBundle 'johngrib/vim-game-code-break'
 
+"#### re:View
+NeoBundle 'moro/vim-review'
+
 "#### developing
 
 call neobundle#end()
@@ -479,6 +482,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.vue        set filetype=vue
   autocmd BufNewFile,BufRead *.toml       set filetype=toml
   autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE,*.sky setfiletype bzl
+  autocmd BufNewFile,BufRead *.re         set filetype=review
 augroup END
 
 augroup file_encoding
