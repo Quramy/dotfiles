@@ -296,8 +296,8 @@ let g:quickrun_config['coffee'] = {
 let g:quickrun_config['go'] = {
       \ 'exec': "go run %s"
       \ }
-let g:quickrun_config['typescriptProject'] = {
-      \ 'exec': ["tsc --outDir .", "node %s:p:r.js"]
+let g:quickrun_config['typescript'] = {
+      \ 'exec': "npx ts-node %s"
       \ }
 
 "#### Golang navigation
@@ -424,7 +424,9 @@ function! s:highlight_copy_with_file(fname)
         \'--font-size', font_size,
         \'--style', style
         \]
-  let rtf = system('highlight '.join(options, ' ').' '.a:fname.' | pbcopy')
+  " let rtf = system('highlight '.join(options, ' ').' '.a:fname.' | pbcopy')
+  let rtf = system('highlight '.join(options, ' ').' '.a:fname)
+  call writefile([rtf], expand('~/highlight.rtf'))
 endfunction
 
 function! s:highlight_copy_current_buffer()
@@ -534,6 +536,7 @@ augroup typescript
   autocmd FileType typescript setlocal foldmethod=syntax
   " autocmd FileType typescript JsPreTmpl html
   autocmd FileType typescript syn clear foldBraces
+  " autocmd InsertLeave,TextChanged,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr(1000)
   "autocmd FileType typescript setlocal ballooneval
 augroup END
 
@@ -698,7 +701,6 @@ augroup typescript_key_mapping
   autocmd FileType typescript nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
   autocmd FileType typescript nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
   autocmd FileType typescript nmap <buffer> <Leader>t :<C-u>echo tsuquyomi#hint()<CR>
-  autocmd FileType typescript nmap <buffer> <Leader>r :<C-u>echo tsuquyomi#hint()<CR>
 augroup END
 
 "#### JavaScript
