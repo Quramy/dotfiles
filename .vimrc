@@ -125,6 +125,7 @@ NeoBundle 'rhysd/github-complete.vim'
 "#### HTML
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'HTML5-Syntax-File'
+NeoBundle 'digitaltoad/vim-pug'
 
 "#### JavaScript/JSON
 NeoBundle 'isRuslan/vim-es6'
@@ -485,6 +486,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.toml       set filetype=toml
   autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE,*.sky setfiletype bzl
   autocmd BufNewFile,BufRead *.re         set filetype=review
+  autocmd BufNewFile,BufRead *.pug        set filetype=pug
 augroup END
 
 augroup file_encoding
