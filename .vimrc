@@ -478,6 +478,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.ru         set filetype=ruby
   autocmd BufNewFile,BufRead *.gradle     set filetype=groovy
   autocmd BufNewFile,BufRead *.graphql    set filetype=graphql
+  autocmd BufNewFile,BufRead *.prisma     set filetype=graphql
   autocmd BufNewFile,BufRead *.graphcool  set filetype=graphql
   autocmd BufNewFile,BufRead *.thrift     set filetype=thrift
   autocmd BufNewFile,BufRead *.dart       set filetype=dart
