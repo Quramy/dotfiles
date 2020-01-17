@@ -73,6 +73,7 @@ endif
 filetype plugin indent on
 NeoBundle 'vim-jp/vimdoc-ja'
 
+
 "#### Core plugins
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
@@ -82,6 +83,7 @@ NeoBundle 'Shougo/vimfiler'
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'gerw/vim-HiLinkTrace'
 
 "#### Tools across lang
 NeoBundle 'thinca/vim-quickrun'
@@ -139,7 +141,9 @@ NeoBundle 'Quramy/syntastic-node-daemon'
 "NeoBundle 'facebook/vim-flow'
 
 "#### TypeScript
-NeoBundle 'leafgarland/typescript-vim'
+"#### NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'HerringtonDarkholme/yats.vim'
+NeoBundle 'maxmellon/vim-jsx-pretty'
 NeoBundle 'Quramy/tsuquyomi'
 NeoBundle 'Quramy/vim-dtsm'
 
@@ -153,11 +157,11 @@ NeoBundle 'kchmck/vim-coffee-script'
 "#### dart
 NeoBundle 'dart-lang/dart-vim-plugin'
 
-"#### Golang
-NeoBundle 'fatih/vim-go'
-NeoBundle 'dgryski/vim-godef'
-NeoBundle 'vim-jp/vim-go-extra'
-NeoBundle 'google/vim-ft-go'
+" "#### Golang
+" NeoBundle 'fatih/vim-go'
+" NeoBundle 'dgryski/vim-godef'
+" NeoBundle 'vim-jp/vim-go-extra'
+" NeoBundle 'google/vim-ft-go'
 
 "#### CSS, SCSS
 NeoBundle 'hail2u/vim-css3-syntax'
@@ -469,7 +473,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.json       set filetype=json
   autocmd BufNewFile,BufRead .babelrc     set filetype=json
   autocmd BufNewFile,BufRead *.ts         set filetype=typescript
-  autocmd BufNewFile,BufRead *.tsx        set filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx        set filetype=typescriptreact
   autocmd BufNewFile,BufRead *.mjs        set filetype=javascript
   autocmd BufNewFile,BufRead *.jsx        set filetype=javascript
   autocmd BufNewFile,BufRead *.es5        set filetype=javascript
@@ -537,8 +541,8 @@ augroup typescript
   autocmd FileType typescript setlocal tabstop=2
   autocmd FileType typescript setlocal shiftwidth=2
   autocmd FileType typescript setlocal foldmethod=syntax
-  " autocmd FileType typescript JsPreTmpl html
-  autocmd FileType typescript syn clear foldBraces
+  " autocmd FileType typescript JsPreTmpl
+  " autocmd FileType typescript syn clear foldBraces
   " autocmd InsertLeave,TextChanged,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr(1000)
   "autocmd FileType typescript setlocal ballooneval
 augroup END
