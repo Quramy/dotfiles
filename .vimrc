@@ -336,11 +336,11 @@ endfunction
 let s:syntastic_config = {}
 
 function! s:syntastic_config.typescript() abort dict
-  if s:prj_has('tslint.json')[0]
-    return ['tsuquyomi', 'tslintd']
-  else
-    return ['tsuquyomi']
-  endif
+  return ['tsuquyomi']
+endfunction
+
+function! s:syntastic_config.typescriptreact() abort dict
+  return ['tsuquyomi']
 endfunction
 
 function! s:syntastic_config.javascript() abort dict
@@ -536,11 +536,11 @@ augroup coffee
 augroup END
 
 augroup typescript
-  autocmd FileType typescript SyntasticBufferConfigure
-  autocmd FileType typescript setlocal completeopt=menu
-  autocmd FileType typescript setlocal tabstop=2
-  autocmd FileType typescript setlocal shiftwidth=2
-  autocmd FileType typescript setlocal foldmethod=syntax
+  autocmd FileType typescript,typescriptreact SyntasticBufferConfigure
+  autocmd FileType typescript,typescriptreact setlocal completeopt=menu
+  autocmd FileType typescript,typescriptreact setlocal tabstop=2
+  autocmd FileType typescript,typescriptreact setlocal shiftwidth=2
+  autocmd FileType typescript,typescriptreact setlocal foldmethod=syntax
   " autocmd FileType typescript JsPreTmpl
   " autocmd FileType typescript syn clear foldBraces
   " autocmd InsertLeave,TextChanged,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr(1000)
@@ -703,11 +703,11 @@ augroup END
 
 "#### TypeScript
 augroup typescript_key_mapping
-  autocmd FileType typescript nmap <buffer> <Leader>e  <Plug>(TsuquyomiRenameSymbol)
-  autocmd FileType typescript nmap <buffer> <Leader>E  <Plug>(TsuquyomiRenameSymbolC)
-  autocmd FileType typescript nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
-  autocmd FileType typescript nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
-  autocmd FileType typescript nmap <buffer> <Leader>t :<C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>e  <Plug>(TsuquyomiRenameSymbol)
+  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>E  <Plug>(TsuquyomiRenameSymbolC)
+  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
+  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
+  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>t :<C-u>echo tsuquyomi#hint()<CR>
 augroup END
 
 "#### JavaScript
