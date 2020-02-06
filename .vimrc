@@ -462,6 +462,7 @@ command! AleBufferConfigure : call s:ale_buffer_configure()
 command! HighlightCopyBuf : call s:highlight_copy_current_buffer()
 command! HighlightVis : call s:highlight_copy_visual_selection()
 command! TermMini : terminal ++rows=14
+command! TermPopup : call popup_create(term_start(['zsh'], #{ hidden: 1, term_finish: 'close'}), #{ border: [], minwidth: 100, minheight: 24 })
 "}}} end Original Commands
 
 "### Auto Command {{{
@@ -681,6 +682,7 @@ nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 
 "#### Terminal
 nnoremap <silent> <Leader>fa : <C-u>TermMini<CR><C-W>x<C-W>j
+nnoremap <silent> <Leader>fk : <C-u>TermPopup<CR><C-W>x<C-W>j
 tnoremap <C-Z> <C-W>N
 
 "#### VimFiler
