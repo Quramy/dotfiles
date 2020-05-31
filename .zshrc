@@ -1,4 +1,3 @@
-
 ## completion {{{
 autoload -U compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -51,14 +50,3 @@ alias git-delete-pruned-branch="grep -e '\[deleted\]' | awk '{print $5}' | sed '
 
 export PATH="$HOME/.yarn/bin:$PATH"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
-
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/yosuke/git/reg-suit/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/yosuke/git/reg-suit/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/yosuke/git/reg-suit/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/yosuke/git/reg-suit/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/yosuke/git/reg-suit/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/yosuke/git/reg-suit/node_modules/tabtab/.completions/slss.zsh
