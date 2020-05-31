@@ -138,6 +138,7 @@ NeoBundle 'Quramy/vison'
 NeoBundle 'Quramy/vim-json-schema-nav'
 NeoBundle 'Quramy/vim-js-pretty-template'
 NeoBundle 'Quramy/syntastic-node-daemon'
+NeoBundle 'prettier/vim-prettier'
 "NeoBundle 'facebook/vim-flow'
 
 "#### TypeScript
@@ -601,6 +602,9 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:flow#enable = 0
 let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
+
+"#### Prettier
+let g:prettier#exec_cmd_path = "npx prettier"
 
 "#### ALE
 let g:ale_linters = { }
