@@ -731,6 +731,7 @@ augroup END
 
 augroup rust_key_mapping
   autocmd FileType rust nmap <buffer> <C-]> :LspDefinition <CR>
+  autocmd FileType rust nmap <buffer> <Leader>t :LspHover <CR>
 augroup END
 
 "}}} end Key Mappings 
