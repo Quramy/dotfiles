@@ -117,6 +117,7 @@ NeoBundle 'tpope/vim-abolish'
 
 "#### Git, Github
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'sodapopcan/vim-twiggy'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'junegunn/vim-emoji'
 NeoBundle 'rhysd/github-complete.vim'
@@ -469,6 +470,8 @@ command! TermPopup : call popup_create(term_start(['zsh'], #{ hidden: 1, term_fi
 "### Auto Command {{{
 "#### File types
 
+autocmd VimEnter * if empty(expand('<amatch>'))|call FugitiveDetect(getcwd())|endif
+
 augroup vimrc_detect_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.md         set filetype=markdown
@@ -594,6 +597,9 @@ if exists('$GITHUB_ACCESS_TOKEN')
   let g:github_complete_github_api_token=$GITHUB_ACCESS_TOKEN
 endif
 
+"#### twiggy
+let g:twiggy_num_columns = 70
+
 "#### Syntastic checker
 let g:syntastic_cpp_include_dirs = []
 let g:syntastic_cpp_compiler = 'clang++'
@@ -688,6 +694,9 @@ nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 nnoremap <silent> <Leader>fa : <C-u>TermMini<CR><C-W>x<C-W>j
 nnoremap <silent> <Leader>fk : <C-u>TermPopup<CR><C-W>x<C-W>j
 tnoremap <C-Z> <C-W>N
+
+"#### twiggy
+nnoremap <silent> <Leader>fe : <C-u>Twiggy<CR>
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=42 -no-quit -buffer-name=side<CR>
