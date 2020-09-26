@@ -695,6 +695,9 @@ nnoremap <silent> <Leader>fa : <C-u>TermMini<CR><C-W>x<C-W>j
 nnoremap <silent> <Leader>fk : <C-u>TermPopup<CR><C-W>x<C-W>j
 tnoremap <C-Z> <C-W>N
 
+"#### fugitive
+nnoremap <silent> <Leader>fg : <C-u>Gstatus<CR>
+
 "#### twiggy
 nnoremap <silent> <Leader>fe : <C-u>Twiggy<CR>
 
