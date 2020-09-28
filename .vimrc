@@ -121,6 +121,7 @@ NeoBundle 'sodapopcan/vim-twiggy'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'junegunn/vim-emoji'
 NeoBundle 'rhysd/github-complete.vim'
+NeoBundle 'tpope/vim-rhubarb'
 
 "#### C/C++
 " NeoBundle 'justmao945/vim-clang'
@@ -599,6 +600,10 @@ endif
 
 "#### twiggy
 let g:twiggy_num_columns = 70
+
+"#### rhubarb
+"##### GHE domain
+let g:github_enterprise_urls = [$GHE_DOMEIN]
 
 "#### Syntastic checker
 let g:syntastic_cpp_include_dirs = []
