@@ -50,9 +50,3 @@ alias git-delete-pruned-branch="grep -e '\[deleted\]' | awk '{print $5}' | sed '
 
 export PATH="$HOME/.yarn/bin:$PATH"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/01040105/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/01040105/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/01040105/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/01040105/google-cloud-sdk/completion.zsh.inc'; fi
