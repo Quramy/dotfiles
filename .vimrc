@@ -14,7 +14,7 @@ set noswapfile
 set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp
 set fileformats=unix,dos,mac
 set nocompatible
-set background=light
+set background=dark
 set noerrorbells
 set ignorecase
 set smartcase
@@ -82,7 +82,7 @@ NeoBundle 'Shougo/vimfiler'
 "#### Theme
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'cocopon/iceberg.vim'
 NeoBundle 'gerw/vim-HiLinkTrace'
 
 "#### Tools across lang
@@ -218,7 +218,7 @@ NeoBundle 'moro/vim-review'
 call neobundle#end()
 
 syntax enable
-colorscheme solarized
+colorscheme iceberg 
 
 " }}} NeoBundle Configuration end.
 
