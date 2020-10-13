@@ -48,5 +48,7 @@ alias git-delete-pruned-branch="grep -e '\[deleted\]' | awk '{print $5}' | sed '
 
 [ -f "$HOME"/.zshrc.local ] && source $HOME/.zshrc.local
 
+export LC_CTYPE=ja_JP.UTF-8
+
 export PATH="$HOME/.yarn/bin:$PATH"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}

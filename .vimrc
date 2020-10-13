@@ -106,6 +106,7 @@ NeoBundle 'w0rp/ale' , {
       \   'filetypes': ['javascript'],
       \  }}
 NeoBundle 'luochen1990/rainbow'
+NeoBundle 'puremourning/vimspector'
 
 NeoBundle 'ekalinin/Dockerfile.vim'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
@@ -668,6 +669,14 @@ endif
 let g:lsp_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 
+"#### vimSpector
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+let g:vimspector_install_gadgets = [ 
+      \ 'vscode-node-debug2',
+      \ 'debugger-for-chrome',
+      \ 'CodeLLDB'
+      \ ]
+
 "#### JsPreTmpl
 " call jspretmpl#register_tag('gql', 'graphql')
 
@@ -705,6 +714,10 @@ nnoremap <silent> <Leader>fg : <C-u>Gstatus<CR>
 
 "#### twiggy
 nnoremap <silent> <Leader>fe : <C-u>Twiggy<CR>
+
+"#### vimspector
+nnoremap <silent> <Leader>fx : call vimspector#Launch() <CR>
+nnoremap <silent> <Leader>fb : call vimspector#Reset() <CR>
 
 "#### VimFiler
 nnoremap <silent> <Leader>fi : <C-u>VimFilerBufferDir -split -simple -winwidth=42 -no-quit -buffer-name=side<CR>
