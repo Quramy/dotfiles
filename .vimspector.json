@@ -26,6 +26,26 @@
           "uncaught": "Y"
         }
       }
+    },
+    "Rust": {
+      "adapter": "CodeLLDB",
+      "variables": {
+        "ProjectName": {
+          "shell": ["basename", "${cwd}"]
+        }
+      },
+      "configuration": {
+        "request": "launch",
+        "program": "${cwd}/target/debug/${ProjectName}"
+      },
+      "breakpoints": {
+        "exception": {
+          "cpp_throw": "",
+          "cpp_catch": "",
+          "all": "N",
+          "uncaught": "Y"
+        }
+      }
     }
   }
 }
