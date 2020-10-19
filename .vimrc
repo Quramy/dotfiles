@@ -753,6 +753,11 @@ augroup flow_key_mapping
   autocmd FileType javascript nmap <buffer> <Leader>qf :ALEFix <CR>
 augroup END
 
+"#### Rust
+augroup rust_key_mapping
+  autocmd FileType rust nmap <silent> <Leader>p : !rustfmt % <CR>
+augroup END
+
 "#### GoLang
 augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
