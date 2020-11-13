@@ -171,6 +171,9 @@ NeoBundle 'dart-lang/dart-vim-plugin'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'cakebaker/scss-syntax.vim'
 
+"#### Groovy
+NeoBundle 'modille/groovy.vim'
+
 "#### Vim script
 NeoBundle 'vim-jp/vital.vim'
 NeoBundle 'machakann/vim-vimhelplint'
