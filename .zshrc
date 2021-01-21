@@ -22,19 +22,17 @@ bindkey '^Q' push-line-or-edit
 ## key binding }}}
 
 ## prompt {{{
-colh="%{[36m%}"
 case ${UID} in
 0)
-    PROMPT="%B%{[31m%}%/#%{[m%}%b "
-		PROMPT2="%B%{[31m%}%_#%{[m%}%b "
-		SPROMPT="%B%{[31m%}%r is correct? [n,y,a,e]:%{[m%}%b "
+    PROMPT="%B%F{red}%/ #%f%b"
+		PROMPT2="%B%F{red}%_#%f%b "
+		SPROMPT="%B%F{red}%r is correct? [n,y,a,e]:%f%b "
 		;;
 *)
-		# PROMPT="${colh}${USER}@%m:%1~ >%{[m%}"
-		PROMPT="${colh}yosuke@local:%1~ >%{[m%}"
-		RPROMPT="%{[33m%}[%~]%{[m%}"
-		PROMPT2="%{[35m%}%_%%%{[m%} "
-		SPROMPT="%{[31m%}%r is correct? [n,y,a,e]:%{[m%} "
+		PROMPT="%F{blue}quramy@local:%1~ >%f"
+		RPROMPT="%F{yellow}[%~]%f"
+		PROMPT2="%F{magenta}%_%%%f "
+		SPROMPT="%F{magenta}%r is correct? [n,y,a,e]:%f "
 		;;
 esac
 ## prompt }}}
