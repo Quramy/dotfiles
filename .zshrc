@@ -30,7 +30,8 @@ case ${UID} in
 		SPROMPT="%B%{[31m%}%r is correct? [n,y,a,e]:%{[m%}%b "
 		;;
 *)
-		PROMPT="${colh}${USER}@%m:%1~ >%{[m%}"
+		# PROMPT="${colh}${USER}@%m:%1~ >%{[m%}"
+		PROMPT="${colh}yosuke@local:%1~ >%{[m%}"
 		RPROMPT="%{[33m%}[%~]%{[m%}"
 		PROMPT2="%{[35m%}%_%%%{[m%} "
 		SPROMPT="%{[31m%}%r is correct? [n,y,a,e]:%{[m%} "
