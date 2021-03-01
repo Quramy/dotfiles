@@ -481,6 +481,7 @@ augroup vimrc_detect_filetype
   autocmd!
   autocmd BufNewFile,BufRead *.{md,mdx}   set filetype=markdown
   autocmd BufNewFile,BufRead *.json       set filetype=json
+  autocmd BufNewFile,BufRead *.json5      set filetype=javascript
   autocmd BufNewFile,BufRead .babelrc     set filetype=json
   autocmd BufNewFile,BufRead *.ts         set filetype=typescript
   autocmd BufNewFile,BufRead *.tsx        set filetype=typescriptreact
