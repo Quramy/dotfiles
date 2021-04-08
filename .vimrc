@@ -567,6 +567,10 @@ augroup rust
   autocmd FileType rust setlocal omnifunc=lsp#complete
 augroup END
 
+augroup ocaml
+  autocmd FileType ocaml setlocal omnifunc=lsp#complete
+augroup END
+
 augroup css
   autocmd FileType css SyntasticBufferConfigure
 augroup END
@@ -655,19 +659,26 @@ if executable('clangd')
       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
       \ })
 endif
-if executable('flow-language-server')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'flow-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'flow-language-server --stdio --try-flow-bin']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
-        \ 'whitelist': ['javascript'],
-        \ })
-endif
+" if executable('flow-language-server')
+"   au User lsp_setup call lsp#register_server({
+"         \ 'name': 'flow-language-server',
+"         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'flow-language-server --stdio --try-flow-bin']},
+"         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+"         \ 'whitelist': ['javascript'],
+"         \ })
+" endif
 if executable('rls')
   au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
         \ 'cmd': {server_info->['rust-analyzer']},
         \ 'whitelist': ['rust'],
+        \ })
+endif
+if executable('ocamllsp')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'ocaml',
+        \ 'cmd': {server_info->['ocamllsp']},
+        \ 'whitelist': ['ocaml'],
         \ })
 endif
 let g:lsp_signs_enabled = 1         " enable signs
