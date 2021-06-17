@@ -209,6 +209,9 @@ NeoBundle 'google/vim-maktaba'
 NeoBundle 'bazelbuild/vim-ft-bzl'
 NeoBundle 'bazelbuild/vim-bazel'
 
+"#### Prisma2
+NeoBundle 'pantharshit00/vim-prisma'
+
 "#### for Nyaovim
 " NeoBundle 'rhysd/nyaovim-running-gopher'
 " NeoBundle 'johngrib/vim-game-code-break'
@@ -494,7 +497,6 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.ru         set filetype=ruby
   autocmd BufNewFile,BufRead *.gradle     set filetype=groovy
   autocmd BufNewFile,BufRead *.graphql    set filetype=graphql
-  autocmd BufNewFile,BufRead *.prisma     set filetype=graphql
   autocmd BufNewFile,BufRead *.graphcool  set filetype=graphql
   autocmd BufNewFile,BufRead *.thrift     set filetype=thrift
   autocmd BufNewFile,BufRead *.dart       set filetype=dart
@@ -503,6 +505,7 @@ augroup vimrc_detect_filetype
   autocmd BufRead,BufNewFile *.bzl,BUILD,*.BUILD,BUILD.*,WORKSPACE,*.sky setfiletype bzl
   autocmd BufNewFile,BufRead *.re         set filetype=review
   autocmd BufNewFile,BufRead *.pug        set filetype=pug
+  autocmd BufNewFile,BufRead *.prisma     set filetype=prisma
 augroup END
 
 augroup file_encoding
@@ -577,6 +580,12 @@ augroup END
 
 augroup keyward_hyphen
   autocmd FileType xml,html,css,scss setlocal iskeyword+=-
+augroup END
+
+augroup prisma
+  autocmd FileType prisma setlocal omnifunc=lsp#complete
+  autocmd FileType prisma setlocal autoindent
+  autocmd FileType prisma setlocal smartindent
 augroup END
 
 "#### Screen Hacks 
@@ -680,6 +689,13 @@ if executable('ocamllsp')
         \ 'cmd': {server_info->['ocamllsp']},
         \ 'whitelist': ['ocaml'],
         \ })
+endif
+if executable('prisma-language-server')
+  call lsp#register_server({
+      \ 'name': 'prisma',
+      \ 'cmd': {server_info->['prisma-language-server']},
+      \ 'whitelist': ['prisma'],
+      \ })
 endif
 let g:lsp_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
