@@ -741,7 +741,7 @@ nnoremap <silent> <Leader>fk : <C-u>TermPopup<CR><C-W>x<C-W>j
 tnoremap <C-Z> <C-W>N
 
 "#### fugitive
-nnoremap <silent> <Leader>fg : <C-u>Gstatus<CR>
+nnoremap <silent> <Leader>fg : <C-u>Git<CR>
 
 "#### twiggy
 nnoremap <silent> <Leader>fe : <C-u>Twiggy<CR>
