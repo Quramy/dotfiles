@@ -738,6 +738,7 @@ nnoremap <silent> [unite]t :<C-u>Unite<Space>-start-insert<Space>tsproject<CR>
 "#### Terminal
 nnoremap <silent> <Leader>fa : <C-u>TermMini<CR><C-W>x<C-W>j
 nnoremap <silent> <Leader>fk : <C-u>TermPopup<CR><C-W>x<C-W>j
+nnoremap <silent> <Leader>fl : <C-u>vsp <bar> term ++curwin<CR>
 tnoremap <C-Z> <C-W>N
 
 "#### fugitive
