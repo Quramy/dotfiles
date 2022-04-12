@@ -487,6 +487,8 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.json5      set filetype=javascript
   autocmd BufNewFile,BufRead .babelrc     set filetype=json
   autocmd BufNewFile,BufRead *.ts         set filetype=typescript
+  autocmd BufNewFile,BufRead *.mts        set filetype=typescript
+  autocmd BufNewFile,BufRead *.cts        set filetype=typescript
   autocmd BufNewFile,BufRead *.tsx        set filetype=typescriptreact
   autocmd BufNewFile,BufRead *.mjs        set filetype=javascript
   autocmd BufNewFile,BufRead *.jsx        set filetype=javascript
