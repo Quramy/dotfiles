@@ -182,6 +182,7 @@ NeoBundle 'machakann/vim-vimhelplint'
 NeoBundle 'Shougo/neocomplcache-rsense', {
 			\ 'depends': 'Shougo/neocomplcache',
 			\ 'autoload': { 'filetypes': 'ruby' }}
+NeoBundle 'slim-template/vim-slim'
 
 " NeoBundleLazy 'taichouchou2/rsense-0.3', {
 " 			\ 'build' : {
@@ -508,6 +509,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.re         set filetype=review
   autocmd BufNewFile,BufRead *.pug        set filetype=pug
   autocmd BufNewFile,BufRead *.prisma     set filetype=prisma
+  autocmd BufNewFile,BufRead *.slim       set filetype=slim
 augroup END
 
 augroup file_encoding
