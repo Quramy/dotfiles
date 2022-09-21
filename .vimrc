@@ -472,6 +472,8 @@ function! s:live_server_start(key) abort
           \"err_io": "null"
           \})
     let s:live_server_job_dict[a:key] = job
+  else
+    let job = s:live_server_job_dict[a:key]
   endif
   return job
 endfunction
