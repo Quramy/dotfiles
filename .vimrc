@@ -124,6 +124,9 @@ NeoBundle 'junegunn/vim-emoji'
 NeoBundle 'rhysd/github-complete.vim'
 NeoBundle 'tpope/vim-rhubarb'
 
+"#### mermaid diagram
+NeoBundle 'chazmcgarvey/vim-mermaid'
+
 "#### C/C++
 " NeoBundle 'justmao945/vim-clang'
 
@@ -456,6 +459,59 @@ function! s:highlight_copy_visual_selection()
   call s:highlight_copy_with_file(fname)
 endfunction
 
+function! s:mermaid_exec() abort
+  let input_path = expand('%:p')
+  if !exists('b:mmd_temp_filepath')
+    let b:mmd_temp_filepath = tempname().expand('%:t').'.svg'
+  endif
+  let b:mmdc_error_buf_name = 'mmdc_errors_'.bufname()
+
+  let options = [
+        \'-i', input_path,
+        \'-o', b:mmd_temp_filepath
+        \]
+  let result = systemlist('npx mmdc '.join(options))
+
+  if v:shell_error > 0
+    if bufexists(b:mmdc_error_buf_name)
+      let winid = bufwinid(b:mmdc_error_buf_name)
+      if winid isnot# -1
+        call win_gotoid(winid)
+      else
+        execute 'sbuffer' b:mmdc_error_buf_name
+      endif
+    else
+      execute 'new' b:mmdc_error_buf_name
+      set buftype=nofile
+      nnoremap <silent> <buffer> q :<C-u>bwipeout!<CR>
+    endif
+
+    %delete _
+    call setline(1, result[2:])
+
+  else
+    return [v:shell_error, b:mmd_temp_filepath, b:mmdc_error_buf_name]
+  endif
+endfunction
+
+function! s:mermaid_write() abort
+  let result = s:mermaid_exec()
+  if result[0] < 1
+    if bufexists(result[2])
+      execute 'bwipeout!' result[2]
+    endif
+  endif
+endfunction
+
+function! s:mermaid_open() abort
+  let result = s:mermaid_exec()
+  if result[0] < 1
+    call system('open '.result[1])
+    if bufexists(result[2])
+      execute 'bwipeout!' result[2]
+    endif
+  endif
+endfunction
 
 function! s:configure_tsuquyomi_formatopt() abort
 endfunction
@@ -474,6 +530,8 @@ command! HighlightCopyBuf : call s:highlight_copy_current_buffer()
 command! HighlightVis : call s:highlight_copy_visual_selection()
 command! TermMini : terminal ++rows=14
 command! TermPopup : call popup_create(term_start(['zsh'], #{ hidden: 1, term_finish: 'close'}), #{ border: [], minwidth: 100, minheight: 24 })
+command! MermaidWrite : call s:mermaid_write()
+command! MermaidOpen : call s:mermaid_open()
 "}}} end Original Commands
 
 "### Auto Command {{{
@@ -510,6 +568,7 @@ augroup vimrc_detect_filetype
   autocmd BufNewFile,BufRead *.pug        set filetype=pug
   autocmd BufNewFile,BufRead *.prisma     set filetype=prisma
   autocmd BufNewFile,BufRead *.slim       set filetype=slim
+  autocmd BufNewFile,BufRead *.mmd        set filetype=mermaid
 augroup END
 
 augroup file_encoding
@@ -803,6 +862,11 @@ augroup END
 augroup rust_key_mapping
   autocmd FileType rust nmap <buffer> <C-]> :LspDefinition <CR>
   autocmd FileType rust nmap <buffer> <Leader>t :LspHover <CR>
+augroup END
+
+augroup mermaid_mapping
+  autocmd FileType mermaid nmap <buffer> <Leader>R :MermaidOpen <CR>
+  autocmd FileType mermaid nmap <buffer> <Leader>r :MermaidWrite <CR>
 augroup END
 
 "}}} end Key Mappings 
