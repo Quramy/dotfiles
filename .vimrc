@@ -459,18 +459,41 @@ function! s:highlight_copy_visual_selection()
   call s:highlight_copy_with_file(fname)
 endfunction
 
+"#### live server util
+let s:live_server_job_dict = {}
+function! s:live_server_start(key) abort
+  let cwd = fnamemodify(a:key, ":p:h")
+  let command = "npx --yes live-server"
+  if !has_key(s:live_server_job_dict, a:key)
+    let job = job_start(command, {
+          \"cwd": cwd,
+          \"in_io": "null",
+          \"out_io": "null",
+          \"err_io": "null"
+          \})
+    let s:live_server_job_dict[a:key] = job
+  endif
+  return job
+endfunction
+function! s:live_server_end(key) abort
+  if has_key(s:live_server_job_dict, a:key)
+    let job = s:live_server_job_dict[a:key]
+    job->job_stop("kill")
+  endif
+endfunction
+
+"#### Mermaid
 function! s:mermaid_exec() abort
   let input_path = expand('%:p')
   if !exists('b:mmd_temp_filepath')
     let b:mmd_temp_filepath = tempname().expand('%:t').'.svg'
   endif
-  let b:mmdc_error_buf_name = 'mmdc_errors_'.bufname()
 
   let options = [
         \'-i', input_path,
         \'-o', b:mmd_temp_filepath
         \]
-  let result = systemlist('npx mmdc '.join(options))
+  let result = systemlist('npx --yes mmdc '.join(options))
 
   if v:shell_error > 0
     if bufexists(b:mmdc_error_buf_name)
@@ -490,6 +513,17 @@ function! s:mermaid_exec() abort
     call setline(1, result[2:])
 
   else
+    let svg_path = fnamemodify(b:mmd_temp_filepath, ':t')
+    let html_name = fnamemodify(b:mmd_temp_filepath, ':p:h').'/index.html'
+    let html = [
+          \"<html>",
+          \"  <body>",
+          \"    <img widh='100%' src='".svg_path."' />",
+          \"  </body>",
+          \"</html>"
+          \]
+    let b:mmdc_error_buf_name = 'mmdc_errors_'.bufname()
+    call writefile(html, html_name)
     return [v:shell_error, b:mmd_temp_filepath, b:mmdc_error_buf_name]
   endif
 endfunction
@@ -506,7 +540,7 @@ endfunction
 function! s:mermaid_open() abort
   let result = s:mermaid_exec()
   if result[0] < 1
-    call system('open '.result[1])
+    call s:live_server_start(result[1])
     if bufexists(result[2])
       execute 'bwipeout!' result[2]
     endif
