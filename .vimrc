@@ -443,8 +443,7 @@ function! s:highlight_copy_with_file(fname)
         \'--font-size', font_size,
         \'--style', style
         \]
-  " let rtf = system('highlight '.join(options, ' ').' '.a:fname.' | pbcopy')
-  let rtf = system('highlight '.join(options, ' ').' '.a:fname)
+  let rtf = system('highlight ' . join(options, ' ').' '.a:fname)
   call writefile([rtf], expand('~/highlight.rtf'))
 endfunction
 
@@ -477,11 +476,17 @@ function! s:live_server_start(key) abort
   endif
   return job
 endfunction
-function! s:live_server_end(key) abort
+function! s:live_server_stop(key) abort
   if has_key(s:live_server_job_dict, a:key)
     let job = s:live_server_job_dict[a:key]
-    job->job_stop("kill")
+    call job_stop(job, "kill")
   endif
+endfunction
+function! s:live_server_stop_all() abort
+  for job in values(s:live_server_job_dict)
+    call job_stop(job, "kill")
+  endfor
+  let s:live_server_job_dict = {}
 endfunction
 
 "#### Mermaid
@@ -516,7 +521,7 @@ function! s:mermaid_exec() abort
 
   else
     let svg_path = fnamemodify(b:mmd_temp_filepath, ':t')
-    let html_name = fnamemodify(b:mmd_temp_filepath, ':p:h').'/index.html'
+    let html_name = fnamemodify(b:mmd_temp_filepath, ':p:h') . '/index.html'
     let html = [
           \"<html>",
           \"  <body>",
@@ -526,25 +531,28 @@ function! s:mermaid_exec() abort
           \]
     let b:mmdc_error_buf_name = 'mmdc_errors_'.bufname()
     call writefile(html, html_name)
-    return [v:shell_error, b:mmd_temp_filepath, b:mmdc_error_buf_name]
+    return [v:shell_error, {
+          \"temp_filepath": b:mmd_temp_filepath,
+          \"error_buf_name": b:mmdc_error_buf_name
+          \}]
   endif
 endfunction
 
 function! s:mermaid_write() abort
-  let result = s:mermaid_exec()
-  if result[0] < 1
-    if bufexists(result[2])
-      execute 'bwipeout!' result[2]
+  let [status, info] = s:mermaid_exec()
+  if status  < 1
+    if bufexists(info.error_buf_name)
+      execute 'bwipeout!' info.error_buf_name
     endif
   endif
 endfunction
 
 function! s:mermaid_open() abort
-  let result = s:mermaid_exec()
-  if result[0] < 1
-    call s:live_server_start(result[1])
-    if bufexists(result[2])
-      execute 'bwipeout!' result[2]
+  let [status, info] = s:mermaid_exec()
+  if status  < 1
+    call s:live_server_start(info.temp_filepath)
+    if bufexists(info.error_buf_name)
+      execute 'bwipeout!' info.error_buf_name
     endif
   endif
 endfunction
@@ -566,6 +574,7 @@ command! HighlightCopyBuf : call s:highlight_copy_current_buffer()
 command! HighlightVis : call s:highlight_copy_visual_selection()
 command! TermMini : terminal ++rows=14
 command! TermPopup : call popup_create(term_start(['zsh'], #{ hidden: 1, term_finish: 'close'}), #{ border: [], minwidth: 100, minheight: 24 })
+command! LiveServerStopAll : call s:live_server_stop_all()
 command! MermaidWrite : call s:mermaid_write()
 command! MermaidOpen : call s:mermaid_open()
 "}}} end Original Commands
