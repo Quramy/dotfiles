@@ -150,19 +150,9 @@ NeoBundle 'prettier/vim-prettier'
 "#### TypeScript
 "#### NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'HerringtonDarkholme/yats.vim'
-NeoBundle 'maxmellon/vim-jsx-pretty'
+" NeoBundle 'maxmellon/vim-jsx-pretty'
 NeoBundle 'Quramy/tsuquyomi'
-NeoBundle 'Quramy/vim-dtsm'
-
-"#### Vue.js
-NeoBundle 'posva/vim-vue'
-NeoBundle 'Quramy/tsuquyomi-vue'
-
-"#### CoffeeScript
-NeoBundle 'kchmck/vim-coffee-script'
-
-"#### dart
-NeoBundle 'dart-lang/dart-vim-plugin'
+"  NeoBundle 'Quramy/vim-dtsm'
 
 " "#### Golang
 " NeoBundle 'fatih/vim-go'
