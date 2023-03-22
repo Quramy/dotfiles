@@ -176,6 +176,7 @@ NeoBundle 'Shougo/neocomplcache-rsense', {
 			\ 'depends': 'Shougo/neocomplcache',
 			\ 'autoload': { 'filetypes': 'ruby' }}
 NeoBundle 'slim-template/vim-slim'
+NeoBundle 'tpope/vim-rails'
 
 " NeoBundleLazy 'taichouchou2/rsense-0.3', {
 " 			\ 'build' : {
@@ -883,20 +884,23 @@ augroup flow_key_mapping
   autocmd FileType javascript nmap <buffer> <Leader>qf :ALEFix <CR>
 augroup END
 
+"#### Ruby(Rails)
+augroup rails_key_mapping
+  autocmd FileType ruby nmap <buffer> <C-]> gf <CR> 
+  autocmd FileType ruby nmap <buffer> <C-w><C-]> :sp<CR> gf <CR> 
+augroup END
+
 "#### Rust
 augroup rust_key_mapping
   autocmd FileType rust nmap <silent> <Leader>p : !rustfmt % <CR>
+  autocmd FileType rust nmap <buffer> <C-]> :LspDefinition <CR>
+  autocmd FileType rust nmap <buffer> <Leader>t :LspHover <CR>
 augroup END
 
 "#### GoLang
 augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
   autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
-augroup END
-
-augroup rust_key_mapping
-  autocmd FileType rust nmap <buffer> <C-]> :LspDefinition <CR>
-  autocmd FileType rust nmap <buffer> <Leader>t :LspHover <CR>
 augroup END
 
 augroup mermaid_mapping
