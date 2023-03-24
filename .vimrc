@@ -214,6 +214,9 @@ NeoBundle 'pantharshit00/vim-prisma'
 "#### re:View
 NeoBundle 'moro/vim-review'
 
+"#### terraform
+NeoBundle 'hashivim/vim-terraform'
+
 "#### developing
 
 call neobundle#end()
