@@ -187,6 +187,9 @@ NeoBundle 'tpope/vim-rails'
 "#### fonts
 "NeoBundle 'ryanoasis/vim-devicons'
 
+"#### CSV
+NeoBundle 'mechatroner/rainbow_csv'
+
 "#### Twitter
 NeoBundle 'TwitVim'
 
