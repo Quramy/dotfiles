@@ -557,6 +557,12 @@ endfunction
 function! s:configure_tsuquyomi_formatopt() abort
 endfunction
 
+function! s:rubocop_layout() abort
+  let input_path = expand('%:p')
+  call system('rubocop -x '.input_path)
+  edit!
+endfunction
+
 "}}} end Custom Functions
 
 "### Original Commands {{{
@@ -574,6 +580,7 @@ command! TermPopup : call popup_create(term_start(['zsh'], #{ hidden: 1, term_fi
 command! LiveServerStopAll : call s:live_server_stop_all()
 command! MermaidWrite : call s:mermaid_write()
 command! MermaidOpen : call s:mermaid_open()
+command! RubocopLayout : call s:rubocop_layout()
 "}}} end Original Commands
 
 "### Auto Command {{{
@@ -833,6 +840,8 @@ noremap gq : <C-u>tabclose<CR>
 "#### Window util
 nnoremap <Leader>fw 15<C-w>+
 nnoremap <Leader>ffw 15<C-w>-
+nnoremap <Leader>fh 30<C-w>>
+nnoremap <Leader>ffh 30<C-w><
 
 "#### Unite
 nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
@@ -894,6 +903,7 @@ augroup END
 augroup rails_key_mapping
   autocmd FileType ruby nmap <buffer> <C-]> gf <CR> 
   autocmd FileType ruby nmap <buffer> <C-w><C-]> :sp<CR> gf <CR> 
+  autocmd FileType ruby nmap <buffer> <Leader>p :RubocopLayout <CR>
 augroup END
 
 "#### Rust
