@@ -903,6 +903,7 @@ augroup END
 augroup rails_key_mapping
   autocmd FileType ruby nmap <buffer> <C-]> gf <CR> 
   autocmd FileType ruby nmap <buffer> <C-w><C-]> :sp<CR> gf <CR> 
+  "<Leader>p is mapped by vim-pettier default
   autocmd FileType ruby nmap <buffer> <Leader>p :RubocopLayout <CR>
 augroup END
 
