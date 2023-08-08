@@ -103,7 +103,7 @@ let g:ale_emit_conflict_warnings = 0 " TODO
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'w0rp/ale' , {
       \ 'autoload': {
-      \   'filetypes': ['javascript'],
+      \   'filetypes': ['javascript', 'css'],
       \  }}
 NeoBundle 'luochen1990/rainbow'
 NeoBundle 'puremourning/vimspector'
@@ -144,7 +144,7 @@ NeoBundle 'Quramy/vison'
 NeoBundle 'Quramy/vim-json-schema-nav'
 NeoBundle 'Quramy/vim-js-pretty-template'
 NeoBundle 'Quramy/syntastic-node-daemon'
-NeoBundle 'prettier/vim-prettier'
+NeoBundle 'Quramy/vim-prettier'
 "NeoBundle 'facebook/vim-flow'
 
 "#### TypeScript
@@ -393,6 +393,14 @@ endfunction
 "#### ALE
 let s:ale_config = {}
 
+function! s:ale_config.typescript() abort dict
+  return [[], []]
+endfunction
+
+function! s:ale_config.typescriptreact() abort dict
+  return [[], []]
+endfunction
+
 function! s:ale_config.javascript() abort dict
   let linters = []
   let fixers = []
@@ -403,6 +411,16 @@ function! s:ale_config.javascript() abort dict
     endif
     call add(linters, 'eslint')
     call add(fixers, 'eslint')
+  endif
+  return [linters, fixers]
+endfunction
+
+function! s:ale_config.css() abort dict
+  let linters = []
+  let fixers = []
+  if filereadable('.stylelintrc') || filereadable('.stylelintrc.json') || filereadable('.stylelintrc.js') || filereadable('.stylelintrc.yaml') || filereadable('.stylelintrc.yml')
+    call add(linters, 'stylelint')
+    call add(fixers, 'stylelint')
   endif
   return [linters, fixers]
 endfunction
@@ -662,6 +680,7 @@ augroup coffee
 augroup END
 
 augroup typescript
+  autocmd FileType typescript,typescriptreact AleBufferConfigure
   autocmd FileType typescript,typescriptreact SyntasticBufferConfigure
   autocmd FileType typescript,typescriptreact setlocal completeopt=menu
   autocmd FileType typescript,typescriptreact setlocal tabstop=2
@@ -688,6 +707,7 @@ augroup END
 
 augroup css
   autocmd FileType css SyntasticBufferConfigure
+  autocmd FileType css AleBufferConfigure
 augroup END
 
 augroup keyward_hyphen
@@ -750,6 +770,9 @@ let g:prettier#exec_cmd_path = "npx prettier"
 "#### ALE
 let g:ale_linters = { }
 let g:ale_fixers = { }
+let g:ale_virtualtext_cursor = 'disabled'
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
 
 "#### Markdown Syntax
 let g:markdown_quate_syntax_filetypes = {
