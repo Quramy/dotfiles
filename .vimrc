@@ -711,7 +711,7 @@ augroup css
 augroup END
 
 augroup keyward_hyphen
-  autocmd FileType xml,html,css,scss setlocal iskeyword+=-
+  autocmd FileType xml,html,css,scss,terraform setlocal iskeyword+=-
 augroup END
 
 augroup prisma
