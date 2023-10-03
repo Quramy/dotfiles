@@ -911,6 +911,7 @@ augroup typescript_key_mapping
   autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>e  <Plug>(TsuquyomiRenameSymbol)
   autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>E  <Plug>(TsuquyomiRenameSymbolC)
   autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
+  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>rr <Plug>(TsuquyomiReloadProject)
   autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
   autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>t :<C-u>echo tsuquyomi#hint()<CR>
 augroup END
