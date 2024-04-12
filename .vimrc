@@ -790,6 +790,7 @@ let twitvim_count = 40
 
 "let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('vim-lsp.log')
+let g:lsp_experimental_workspace_folders = 1
 let g:lsp_diagnostics_virtual_text_enabled = 0
 if executable('clangd-mp-devel')
   au User lsp_setup call lsp#register_server({
@@ -817,7 +818,6 @@ if executable('rust-analyzer')
   au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
         \ 'cmd': {server_info->['rust-analyzer']},
-        \ 'root_uri': {server_info->lsp#utils#get_default_root_uri()},
         \ 'whitelist': ['rust'],
         \ })
 endif
