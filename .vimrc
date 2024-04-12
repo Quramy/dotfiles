@@ -787,22 +787,23 @@ let twitvim_enable_python = 1
 let twitvim_count = 40
 
 "#### vim-lsp
-let g:lsp_log_verbose = 1
+
+"let g:lsp_log_verbose = 1
+"let g:lsp_log_file = expand('vim-lsp.log')
 let g:lsp_diagnostics_virtual_text_enabled = 0
-let g:lsp_log_file = expand('~/vim-lsp.log')
 if executable('clangd-mp-devel')
-  call lsp#register_server({
-      \ 'name': 'clangd-mp-devel',
-      \ 'cmd': {server_info->['clangd-mp-devel']},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-      \ })
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd-mp-devel',
+        \ 'cmd': {server_info->['clangd-mp-devel']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
 endif
 if executable('clangd')
-  call lsp#register_server({
-      \ 'name': 'clangd',
-      \ 'cmd': {server_info->['clangd']},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-      \ })
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
 endif
 " if executable('flow-language-server')
 "   au User lsp_setup call lsp#register_server({
@@ -816,6 +817,7 @@ if executable('rust-analyzer')
   au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
         \ 'cmd': {server_info->['rust-analyzer']},
+        \ 'root_uri': {server_info->lsp#utils#get_default_root_uri()},
         \ 'whitelist': ['rust'],
         \ })
 endif
@@ -934,9 +936,11 @@ augroup END
 
 "#### Rust
 augroup rust_key_mapping
-  autocmd FileType rust nmap <silent> <Leader>p : !rustfmt % <CR>
   autocmd FileType rust nmap <buffer> <C-]> :LspDefinition <CR>
   autocmd FileType rust nmap <buffer> <Leader>t :LspHover <CR>
+  autocmd FileType rust nmap <buffer> <Leader>e :LspRename <CR>
+  "<Leader>p is mapped by vim-pettier default
+  autocmd FileType rust nmap <buffer> <Leader>p :LspDocumentFormat<CR>
 augroup END
 
 "#### GoLang
