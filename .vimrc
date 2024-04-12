@@ -788,6 +788,7 @@ let twitvim_count = 40
 
 "#### vim-lsp
 let g:lsp_log_verbose = 1
+let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_log_file = expand('~/vim-lsp.log')
 if executable('clangd-mp-devel')
   call lsp#register_server({
