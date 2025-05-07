@@ -220,6 +220,9 @@ NeoBundle 'moro/vim-review'
 "#### terraform
 NeoBundle 'hashivim/vim-terraform'
 
+"#### Astro
+NeoBundle 'wuelnerdotexe/vim-astro'
+
 "#### developing
 
 call neobundle#end()
