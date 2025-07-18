@@ -123,6 +123,7 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'junegunn/vim-emoji'
 NeoBundle 'rhysd/github-complete.vim'
 NeoBundle 'tpope/vim-rhubarb'
+NeoBundle 'github/copilot.vim'
 
 "#### mermaid diagram
 NeoBundle 'chazmcgarvey/vim-mermaid'
