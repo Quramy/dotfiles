@@ -873,6 +873,10 @@ nnoremap <Leader>ffw 15<C-w>-
 nnoremap <Leader>fh 30<C-w>>
 nnoremap <Leader>ffh 30<C-w><
 
+"#### Copy buffer name
+nnoremap <Leader>cff :let @* = expand('%')<CR>
+nnoremap <Leader>cfh :let @* = expand('%:h')<CR>
+
 "#### Unite
 nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
 nnoremap <silent> [unite]o :<C-u>Unite<Space>outline<CR>

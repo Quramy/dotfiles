@@ -1,2 +1,5 @@
 *.swp
 .DS_Store
+quramy.local/
+.claude/settings.local.json
+*/.claude/settings.local.json
