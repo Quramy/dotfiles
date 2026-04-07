@@ -769,7 +769,7 @@ let g:tsuquyomi_disable_quickfix = 1
 "let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 "#### Prettier
-let g:prettier#exec_cmd_path = "npx prettier"
+"let g:prettier#exec_cmd_path = "npx prettier"
 
 "#### ALE
 let g:ale_linters = { }
