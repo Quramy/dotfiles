@@ -156,10 +156,7 @@ NeoBundle 'Quramy/tsuquyomi'
 "  NeoBundle 'Quramy/vim-dtsm'
 
 " "#### Golang
-" NeoBundle 'fatih/vim-go'
-" NeoBundle 'dgryski/vim-godef'
-" NeoBundle 'vim-jp/vim-go-extra'
-" NeoBundle 'google/vim-ft-go'
+NeoBundle 'fatih/vim-go'
 
 "#### CSS, SCSS
 NeoBundle 'hail2u/vim-css3-syntax'
@@ -319,33 +316,6 @@ let g:quickrun_config['go'] = {
 let g:quickrun_config['typescript'] = {
       \ 'exec': "npx ts-node %s"
       \ }
-
-"#### Golang navigation
-let s:go_navigattion_stack = {}
-function! s:go_create_nav_info()
-  return {'filename': expand('%:p'), 'line': line('.'), 'col': col('.')}
-endfunction
-function! s:go_go_def()
-  let pre_position = s:go_create_nav_info()
-  call go#def#Jump()
-  let position = s:go_create_nav_info()
-  if pre_position != position
-    let win_num = winbufnr('%:p')
-    if !has_key(s:go_navigattion_stack, win_num)
-      let s:go_navigattion_stack[win_num] = []
-    endif
-    call add(s:go_navigattion_stack[win_num], pre_position)
-  endif
-endfunction
-function! s:go_go_back()
-  let win_num = winbufnr('%:p')
-  if !has_key(s:go_navigattion_stack, win_num) || !len(s:go_navigattion_stack[win_num])
-    echom 'No item in navigation stack'
-    return
-  endif
-  let position = remove(s:go_navigattion_stack[win_num], -1)
-  execute 'edit +call\ cursor('.position.line.','.position.col.') '.position.filename
-endfunction
 
 "#### Syntastic Buffer Configure
 let s:syntastic_config = {}
@@ -697,8 +667,9 @@ augroup typescript
 augroup END
 
 augroup golang
-  autocmd FileType go :highlight goErr cterm=bold ctermfg=214
-  autocmd FileType go :match goErr /\<err\>/
+  " autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+  " autocmd FileType go :match goErr /\<err\>/
+  autocmd FileType go setlocal omnifunc=lsp#complete
 augroup END
 
 augroup rust
@@ -823,6 +794,13 @@ if executable('rust-analyzer')
         \ 'name': 'rls',
         \ 'cmd': {server_info->['rust-analyzer']},
         \ 'whitelist': ['rust'],
+        \ })
+endif
+if executable('gopls')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->['gopls']},
+        \ 'whitelist': ['go'],
         \ })
 endif
 if executable('ocamllsp')
@@ -953,8 +931,11 @@ augroup END
 
 "#### GoLang
 augroup golang_key_mapping
-  autocmd FileType go nmap <buffer> <silent> <C-]> :<C-u>GoGoDef<CR>
-  autocmd FileType go nmap <buffer> <silent> <C-t> :<C-u>GoGoBack<CR>
+  autocmd FileType go nmap <buffer> <C-]> :LspDefinition <CR>
+  autocmd FileType go nmap <buffer> <Leader>t :LspHover <CR>
+  autocmd FileType go nmap <buffer> <Leader>e :LspRename <CR>
+  "<Leader>p is mapped by vim-pettier default
+  autocmd FileType go nmap <buffer> <Leader>p :LspDocumentFormat<CR>
 augroup END
 
 augroup mermaid_mapping
