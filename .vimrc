@@ -113,7 +113,9 @@ NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'prabirshrestha/async.vim'
 NeoBundle 'prabirshrestha/asyncomplete.vim'
-NeoBundle 'prabirshrestha/vim-lsp'
+"NeoBundle 'prabirshrestha/vim-lsp'
+" Fork adds client/registerCapability handling; upstream declined similar fixes before (prabirshrestha/vim-lsp#598)
+NeoBundle 'Quramy/vim-lsp'
 NeoBundle 'tpope/vim-abolish'
 
 "#### Git, Github
@@ -249,6 +251,27 @@ function! s:prj_has(fname) abort
   endif
 endfunction
 
+"#### TypeScript backend selection
+function! s:ts_lsp_backend() abort
+  return s:prj_has('node_modules/.bin/tsserver')[0] ? 'tsuquyomi' : 'native'
+endfunction
+
+function! s:typescript_keymaps() abort
+  if b:ts_lsp_backend ==# 'tsuquyomi'
+    nmap <buffer> <Leader>e  <Plug>(TsuquyomiRenameSymbol)
+    nmap <buffer> <Leader>E  <Plug>(TsuquyomiRenameSymbolC)
+    nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
+    nmap <buffer> <Leader>rr <Plug>(TsuquyomiReloadProject)
+    nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
+    nmap <buffer> <Leader>t  :<C-u>echo tsuquyomi#hint()<CR>
+  else
+    nmap <buffer> <C-]>      :LspDefinition <CR>
+    nmap <buffer> <Leader>t  :LspHover <CR>
+    nmap <buffer> <Leader>e  :LspRename <CR>
+    nmap <buffer> <Leader>qf :LspCodeAction <CR>
+  endif
+endfunction
+
 "#### Change Directory
 function! s:change_current(directory, bang)
   if a:directory == ''
@@ -321,11 +344,11 @@ let g:quickrun_config['typescript'] = {
 let s:syntastic_config = {}
 
 function! s:syntastic_config.typescript() abort dict
-  return ['tsuquyomi']
+  return b:ts_lsp_backend ==# 'tsuquyomi' ? ['tsuquyomi'] : []
 endfunction
 
 function! s:syntastic_config.typescriptreact() abort dict
-  return ['tsuquyomi']
+  return b:ts_lsp_backend ==# 'tsuquyomi' ? ['tsuquyomi'] : []
 endfunction
 
 function! s:syntastic_config.javascript() abort dict
@@ -654,12 +677,14 @@ augroup coffee
 augroup END
 
 augroup typescript
+  autocmd FileType typescript,typescriptreact let b:ts_lsp_backend = s:ts_lsp_backend()
   autocmd FileType typescript,typescriptreact AleBufferConfigure
   autocmd FileType typescript,typescriptreact SyntasticBufferConfigure
   autocmd FileType typescript,typescriptreact setlocal completeopt=menu
   autocmd FileType typescript,typescriptreact setlocal tabstop=2
   autocmd FileType typescript,typescriptreact setlocal shiftwidth=2
   autocmd FileType typescript,typescriptreact setlocal foldmethod=syntax
+  autocmd FileType typescript,typescriptreact if b:ts_lsp_backend ==# 'native' | setlocal omnifunc=lsp#complete | endif
   " autocmd FileType typescript JsPreTmpl
   " autocmd FileType typescript syn clear foldBraces
   " autocmd InsertLeave,TextChanged,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr(1000)
@@ -763,6 +788,11 @@ let twitvim_count = 40
 
 "#### vim-lsp
 
+function! s:tsc_lsp_cmd() abort
+  let [has, path] = s:prj_has('node_modules/.bin/tsc')
+  return has ? [path, '--lsp', '--stdio'] : ['tsc', '--lsp', '--stdio']
+endfunction
+
 "let g:lsp_log_verbose = 1
 "let g:lsp_log_file = expand('vim-lsp.log')
 let g:lsp_experimental_workspace_folders = 1
@@ -810,6 +840,12 @@ if executable('ocamllsp')
         \ 'whitelist': ['ocaml'],
         \ })
 endif
+au User lsp_setup call lsp#register_server({
+      \ 'name': 'tsc-lsp',
+      \ 'cmd': {server_info->s:tsc_lsp_cmd()},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+      \ 'allowlist': ['typescript', 'typescriptreact'],
+      \ })
 if executable('prisma-language-server')
   call lsp#register_server({
       \ 'name': 'prisma',
@@ -897,12 +933,7 @@ augroup END
 
 "#### TypeScript
 augroup typescript_key_mapping
-  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>e  <Plug>(TsuquyomiRenameSymbol)
-  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>E  <Plug>(TsuquyomiRenameSymbolC)
-  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>ii <Plug>(TsuquyomiImport)
-  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>rr <Plug>(TsuquyomiReloadProject)
-  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>qf <Plug>(TsuquyomiQuickFix)
-  autocmd FileType typescript,typescriptreact nmap <buffer> <Leader>t :<C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript,typescriptreact call s:typescript_keymaps()
 augroup END
 
 "#### JavaScript
