@@ -958,6 +958,7 @@ augroup rust_key_mapping
   autocmd FileType rust nmap <buffer> <Leader>e :LspRename <CR>
   "<Leader>p is mapped by vim-pettier default
   autocmd FileType rust nmap <buffer> <Leader>p :LspDocumentFormat<CR>
+  autocmd FileType rust nmap <buffer> <Leader>rr :LspStopServer<CR>
 augroup END
 
 "#### GoLang
@@ -967,6 +968,7 @@ augroup golang_key_mapping
   autocmd FileType go nmap <buffer> <Leader>e :LspRename <CR>
   "<Leader>p is mapped by vim-pettier default
   autocmd FileType go nmap <buffer> <Leader>p :LspDocumentFormat<CR>
+  autocmd FileType go nmap <buffer> <Leader>rr :LspStopServer<CR>
 augroup END
 
 augroup mermaid_mapping
