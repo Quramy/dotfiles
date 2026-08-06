@@ -51,3 +51,8 @@ export LC_CTYPE=ja_JP.UTF-8
 
 export PATH="$HOME/.yarn/bin:$PATH"
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}
+
+## Change gh cli edtior to vim from nano
+export GIT_EDITOR=vim
+export VISUAL=vim
+export EDITOR=vim
